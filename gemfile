@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+# 指定gem的下载源，这里使用官方源，如果速度慢可以换成国内镜像
+source "https://rubygems.org"
+
+# 指定Jekyll的版本，可以根据你的需求调整
+# 'github-pages' gem会自动帮你锁定与GitHub Pages兼容的版本
+gem "github-pages", group: :jekyll_plugins
+
+# 这是Jekyll本身，如果你不使用github-pages gem，就需要手动指定
+# gem "jekyll", "~> 4.3" 
+
+# 如果你的主题是一个gem，也需要在这里声明
+# gem "minima", "~> 2.5"
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
