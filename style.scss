@@ -430,6 +430,7 @@ nav {
 .wrapper-content {
   float: right;
   width: 70%;
+  background-color: $content-background-color; // 应用右侧内容区域的背景色
 
   @include mobile {
     float: none;
