@@ -1,20 +1,20 @@
 ---
 layout: post
-title: "使用Rust编写Python依赖的核心逻辑"
+title: "Python 开发 ≠ 纯 Python"
 date: 2025-07-23 14:00:00 +0800
 categories: [技术, 环境配置, Python]
-tags: [Windows, Python, Rust, C++, 依赖管理]
+tags: [Python, Rust, C++, 依赖]
 comments: true
 author: helpfulcraft
 ---
 
-## 使用Rust编写Python依赖的核心逻辑
+## Python 开发 ≠ 纯 Python
 
 **标签：** `Windows`, `Python`, `Rust`, `C++`, `依赖管理`
 
 ### 前言：自动化的翻译制卡需求
 
-我最近在用一款开源电子书阅读器 `AntReader` 学外语。它功能齐全，但无法直接与 Anki（一款卡片记忆软件） 联动，我每次都需要手动导出数据库进行解析，再整理成 Anki 卡片，过程相当繁琐
+我最近在用一款开源电子书阅读器 `AntReader` 学外语。它功能齐全，但无法直接与 Anki（一款卡片式记忆软件） 联动，我每次都需要手动导出数据库进行解析，再整理成 Anki 卡片，过程相当繁琐
 
 方便起见，我写了一个python脚本来进行自动化制卡。因为阅读器本身支持LLM翻译，在制卡时我选择了使用DeepSeek进行翻译
 
