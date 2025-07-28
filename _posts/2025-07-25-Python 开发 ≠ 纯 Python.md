@@ -2,23 +2,18 @@
 layout: post
 title: "Python 开发 ≠ 纯 Python"
 date: 2025-07-23 14:00:00 +0800
-categories: [技术, 环境配置, Python]
 tags: [Python, Rust, C++, 依赖]
 comments: true
 author: helpfulcraft
 ---
 
-## Python 开发 ≠ 纯 Python
-
-**标签：** `Windows`, `Python`, `Rust`, `C++`, `依赖管理`
-
-### 前言：自动化的翻译制卡需求
+### 背景：自动化的翻译制卡需求
 
 我最近在用一款开源电子书阅读器 `AnxReader` 学外语。它功能齐全，但无法直接与 Anki（一款卡片式记忆软件） 联动，我每次都需要手动导出数据库进行解析，再整理成 Anki 卡片，过程相当繁琐
 
 方便起见，我写了一个python脚本来进行自动化制卡。因为阅读器本身支持LLM翻译，在制卡时我选择了使用DeepSeek进行翻译
 
-但前段时间的一次重装系统清除了本地的所有依赖，甚至Python本身，我需要重新安装一切，在此过程中我遇到了许多有价值的问题
+但前段时间的一次重装系统清除了本地的所有依赖，甚至Python本身，我需要重新安装一切
 
 ### 一、Python安装选择
 
@@ -60,6 +55,6 @@ error: the configured Python interpreter version (3.14) is newer than PyO3's max
 
 ### 总结
 
-1.  **Python 开发 ≠ 纯 Python**：高性能 Python 库往往通过Rust/C++实现性能优化的。这是一种通用的优化方式，正如UE开发中通常使用C++编写蓝图核心逻辑以优化性能
-2.  **工具链环环相扣**： `pip` -> `Rust`  -> `C++ 构建工具`
-3.  **多版本环境下的版本管理**：正如 `py.exe` 解决了 Python 多版本共存的问题，我在 `Node.js` 中也曾因版本不匹配而焦头烂额。理解并善用各个系统提供的版本管理工具（如 `py.exe`、`nvm` ），是确保稳定开发的关键
+>1.  **Python 开发 ≠ 纯 Python**：高性能 Python 库往往通过Rust/C++实现性能优化的。这是一种通用的优化方式，正如UE开发中通常使用C++编写蓝图核心逻辑以优化性能
+>2.  **工具链环环相扣**： `pip` -> `Rust`  -> `C++ 构建工具`
+>3.  **多版本环境下的版本管理**：正如 `py.exe` 解决了 Python 多版本共存的问题，我在 `Node.js` 中也曾因版本不匹配而焦头烂额。理解并善用各个系统提供的版本管理工具（如 `py.exe`、`nvm` ），是确保稳定开发的关键
