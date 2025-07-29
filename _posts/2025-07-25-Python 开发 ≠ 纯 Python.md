@@ -1,8 +1,7 @@
 ---
 layout: post
-title: "Python 开发 ≠ 纯 Python"
-date: 2025-07-23 14:00:00 +0800
-tags: [Python, Rust, C++, 依赖]
+title: "Python开发 ≠ 纯Python"
+tags: [Windows, Python, Rust, C++, 依赖]
 comments: true
 author: helpfulcraft
 ---
