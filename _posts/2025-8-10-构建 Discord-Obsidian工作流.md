@@ -63,11 +63,12 @@ author: helpfulcraft
 
 仔细比对 `Webhook` 模块输出的真实数据结构，和 `OneDrive` 中填写的变量，我发现我沿用了之前在n8n的错误逻辑
 
- **多一层映射**
-
- *  频道名： ` {{1.data.channel.name}} ` 
- *  频道名：` {{1.channel.name}} `
-
+> **多一层映射**
+>
+> *  频道名： `1.data.channel.name`
+> 
+> *  频道名： `1.channel.name`
+>
 
 修改为正确的映射，设置好目录后，discord指定频道新发送的消息，会以一个独立的md文件形式出现在指定目录
 
