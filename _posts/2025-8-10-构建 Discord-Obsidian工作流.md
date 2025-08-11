@@ -65,9 +65,9 @@ author: helpfulcraft
 
 > **多一层映射**
 >
-> *  频道名： `{{1.data.channel.name}}`
+> *  频道名： {{1.data.channel.name}}
 > 
-> *  频道名： `{{1.channel.name}}`
+> *  频道名： {{1.channel.name}}
 >
 
 修改为正确的映射，设置好目录后，discord指定频道新发送的消息，会以一个独立的md文件形式出现在指定目录
@@ -77,4 +77,4 @@ author: helpfulcraft
 > **架构**:
 > `Discord` (捕捉) -> `Pipedream` (监听) -> `Make` (接收、上传) -> `OneDrive` (云端) -> `Obsidian` (处理)
 >
-> **越简单越好**。n8n 的失败源自没有Pipedream这般简单、自动化的配置，遇到问题日志信息不够详细，则只能转向其他
+> **越简单越好**：n8n 的失败源自复杂的自定义配置，而Pipedream把组件的开发、Discord的对接等功能封装好了，通过AI助手可以自动化生成可用的配置
