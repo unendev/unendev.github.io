@@ -57,4 +57,4 @@ error: the configured Python interpreter version (3.14) is newer than PyO3's max
 
 >1.  **Python 开发 ≠ 纯 Python**：高性能 Python 库往往通过Rust/C++实现性能优化的。这是一种通用的优化方式，正如UE开发中通常使用C++编写蓝图核心逻辑以优化性能
 >2.  **工具链环环相扣**： `pip` -> `Rust`  -> `C++ 构建工具`
->3.  **多版本环境下的版本管理**：正如 `py.exe` 解决了 Python 多版本共存的问题，我在 `Node.js` 中也曾因版本不匹配而焦头烂额。理解并善用各个系统提供的版本管理工具（如 `py.exe`、`nvm` ），是确保稳定开发的关键
+>3.  **多版本环境下的版本管理**：正如 `py.exe` 解决了 Python 多版本共存的问题，我在 `Node.js` 中也曾因版本不匹配而焦头烂额，善用各系统提供的版本管理工具能减少许多麻烦
