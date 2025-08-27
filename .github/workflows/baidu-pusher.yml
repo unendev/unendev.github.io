@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: ci-bus/baidu-submit-action@v1
 
       - name: Baidu SEO Push
         uses: pop-fashion/baidu-push-action@v1.0.3
@@ -21,4 +21,4 @@ jobs:
           site: https://www.unendev.com
           token: ${{ secrets.BAIDU_TOKEN }}
           # 你的 sitemap.xml 文件的路径，Action 会自动读取它
-          sitemap: sitemap.xml 
+          sitemap: domain
