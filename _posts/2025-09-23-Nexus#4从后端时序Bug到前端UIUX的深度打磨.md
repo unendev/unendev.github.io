@@ -136,7 +136,8 @@ const handleAddToTimer = async (taskName: string, ...) => {
 -   **新增API Endpoint**：为了获取“总时长”数据，我在后端创建了一个新的API路由`/api/timer-tasks/stats/by-instance`，它会根据`userId`查询数据库中所有`TimerTask`记录，按`instanceTag`分组并计算总耗时后返回聚合结果
 -   **动态数据获取**：使用`useEffect`监听`viewMode`的变化。当切换到`'instance'`模式时，组件会异步请求上述新API，并将数据存入`instanceStats`状态
 
-```typescriptreact
+
+```typescript
 // EChartsSunburstChart.tsx
 const [viewMode, setViewMode] = React.useState<'category' | 'instance'>('category');
 const [instanceStats, setInstanceStats] = React.useState<InstanceStat[]>([]);
@@ -171,7 +172,7 @@ React.useEffect(() => {
 -   **数据过滤**：修改`buildInstanceSunburstData`函数，在构建图表数据前，先根据`selectedInstanceTags`数组过滤`instanceStats`。如果筛选数组为空，则显示全部数据
 
 **代码例证：加入筛选器和数据过滤逻辑**
-```typescriptreact
+```typescript
 // EChartsSunburstChart.tsx
 
 // 1. 引入筛选状态
@@ -220,7 +221,7 @@ const buildInstanceSunburstData = React.useCallback(() => {
 
 为了利用PC端的大屏优势，我重新设计了布局，采用了响应式2x2网格
 
-```typescriptreact
+```typescript
 // CreateLogFormWithCards.tsx
 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
   {/* 左上：快速分类创建 (横跨两列) */}
