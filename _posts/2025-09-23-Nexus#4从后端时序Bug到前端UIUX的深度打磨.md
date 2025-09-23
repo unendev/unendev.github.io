@@ -32,7 +32,7 @@ author: helpfulcraft
 
 **问题的根源**：在步骤2和步骤4的数据库更新完成之间，存在一个明显的时间窗口。如果用户在此期间刷新页面，数据库中存储的仍然是`isRunning: false`的状态，导致刷新后任务显示为未开始。我的“等待5秒”大法，本质上就是在硬等这个窗口期过去
 
-```typescript
+```tsx
 // 修复前：分离的创建和开始逻辑
 const handleAddToTimer = async (taskName: string, ...) => {
   // 1. 临时任务状态为 isRunning: false
@@ -84,7 +84,7 @@ const handleAddToTimer = async (taskName: string, ...) => {
     2.  **状态同步**：修改前端的乐观更新逻辑。创建`tempTask`时，就直接将其状态设置为`isRunning: true`和当前的`startTime`，使其与后端将要创建的最终状态保持一致
     3.  **数据替换**：当后端成功返回创建的任务数据后，用返回的真实数据（包含数据库生成的ID和时间戳）替换掉`tempTask`
 
-```typescript
+```tsx
 // 修复后：合并的原子操作
 const handleAddToTimer = async (taskName: string, ...) => {
   // 1. 临时任务状态直接设为 isRunning: true
@@ -137,7 +137,7 @@ const handleAddToTimer = async (taskName: string, ...) => {
 -   **动态数据获取**：使用`useEffect`监听`viewMode`的变化。当切换到`'instance'`模式时，组件会异步请求上述新API，并将数据存入`instanceStats`状态
 
 
-```typescript
+```tsx
 // EChartsSunburstChart.tsx
 const [viewMode, setViewMode] = React.useState<'category' | 'instance'>('category');
 const [instanceStats, setInstanceStats] = React.useState<InstanceStat[]>([]);
@@ -172,7 +172,7 @@ React.useEffect(() => {
 -   **数据过滤**：修改`buildInstanceSunburstData`函数，在构建图表数据前，先根据`selectedInstanceTags`数组过滤`instanceStats`。如果筛选数组为空，则显示全部数据
 
 **代码例证：加入筛选器和数据过滤逻辑**
-```typescript
+```tsx
 // EChartsSunburstChart.tsx
 
 // 1. 引入筛选状态
@@ -221,7 +221,7 @@ const buildInstanceSunburstData = React.useCallback(() => {
 
 为了利用PC端的大屏优势，我重新设计了布局，采用了响应式2x2网格
 
-```typescript
+```tsx
 // CreateLogFormWithCards.tsx
 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
   {/* 左上：快速分类创建 (横跨两列) */}
