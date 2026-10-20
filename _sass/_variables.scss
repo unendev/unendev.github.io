@@ -33,7 +33,7 @@ $base-lighten-color: $oc-gray-6;
 $base-lightener-color: $oc-gray-4;
 
 $background-color: #f9f5e7; // 左侧栏泛黄的书本色调
-$content-background-color: #fffdf7; // 右侧内容区域的背景色，更浅一些
+$content-background-color: $background-color; // 右侧内容区域的背景色与整体一致，避免偏白
 $background-lighten-color: #f8f9fa6b;
 
 $text-color: $base-color;
