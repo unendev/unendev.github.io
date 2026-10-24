@@ -13,6 +13,7 @@ navigation:
     url: /tags
 
 paginate: 8
+future: true
 
 excerpt_separator: <!-- more -->
 
