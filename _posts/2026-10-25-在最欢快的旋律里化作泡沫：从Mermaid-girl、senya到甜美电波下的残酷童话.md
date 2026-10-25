@@ -2,7 +2,7 @@
 layout: post
 title: "在最欢快的旋律里化作泡沫：从《Mermaid girl》、senya 到甜美电波下的残酷童话"
 tags: [音乐, 思考, 二次元, 文化]
-date: 2026-10-25
+date: 2026-10-25 13:10:00 +0800
 comments: true
 author: helpfulcraft
 ---
