@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+<title id="title">《铁花飞》与《辞岁行》的证据层次</title>
+<desc id="desc">歌曲提供迟来的理解主题；剧情提供陈家史、家庭记忆与写史之刀等具体事实；解释连接两者，但不将推测当成创作定论。</desc>
+<rect width="1200" height="500" rx="24" fill="#121b27"/>
+<text x="600" y="58" fill="#f4e6c8" font-size="30" text-anchor="middle" font-family="sans-serif">从歌词意象，到剧情证据，再到有限度的解释</text>
+<g font-family="sans-serif">
+ <rect x="55" y="110" width="320" height="300" rx="18" fill="#283b50" stroke="#88a8c8" stroke-width="2"/>
+ <text x="215" y="155" fill="#fff" font-size="24" text-anchor="middle">歌曲里能听见</text>
+ <text x="85" y="205" fill="#e9eef4" font-size="20">• 迟来的理解</text>
+ <text x="85" y="245" fill="#e9eef4" font-size="20">• 坚强外表与心中纠缠</text>
+ <text x="85" y="285" fill="#e9eef4" font-size="20">• 成长后重看亲近之人</text>
+ <text x="85" y="345" fill="#b8c7d8" font-size="17">官方关联：赤刃明霄陈 EP</text>
+ <text x="85" y="375" fill="#b8c7d8" font-size="17">逐句人物对应：未获证实</text>
+ <path d="M395 260h62" stroke="#e7b86a" stroke-width="5"/><path d="m447 246 18 14-18 14" fill="none" stroke="#e7b86a" stroke-width="5"/>
+ <rect x="465" y="110" width="320" height="300" rx="18" fill="#493927" stroke="#e7b86a" stroke-width="2"/>
+ <text x="625" y="155" fill="#fff" font-size="24" text-anchor="middle">剧情里查得到</text>
+ <text x="495" y="205" fill="#f5eee2" font-size="20">• 陈家史料可能被改写</text>
+ <text x="495" y="245" fill="#f5eee2" font-size="20">• 陈承认父亲曾努力爱她</text>
+ <text x="495" y="285" fill="#f5eee2" font-size="20">• 写史之刀交给肇谦纠错</text>
+ <text x="495" y="345" fill="#e5cda7" font-size="17">事实能被查证、修订</text>
+ <text x="495" y="375" fill="#e5cda7" font-size="17">关系不会因此自动圆满</text>
+ <path d="M805 260h62" stroke="#e7b86a" stroke-width="5"/><path d="m857 246 18 14-18 14" fill="none" stroke="#e7b86a" stroke-width="5"/>
+ <rect x="875" y="110" width="270" height="300" rx="18" fill="#34443d" stroke="#9bc0a4" stroke-width="2"/>
+ <text x="1010" y="155" fill="#fff" font-size="24" text-anchor="middle">可以谨慎推论</text>
+ <text x="905" y="210" fill="#e8f0e9" font-size="20">理解不等于免责</text>
+ <text x="905" y="255" fill="#e8f0e9" font-size="20">记忆可以改写未来</text>
+ <text x="905" y="300" fill="#e8f0e9" font-size="20">Mandarin 双关仅是联想</text>
+ <text x="905" y="355" fill="#bfd5c4" font-size="17">解释需保留不确定性</text>
+</g>
+</svg>
