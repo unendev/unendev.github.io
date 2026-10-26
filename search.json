@@ -2,8 +2,7 @@
 layout: null
 ---
 [
-  {% assign searchable_posts = site.posts | where_exp: "post", "post.redirect_to == nil" %}
-  {% for post in searchable_posts %}
+  {% for post in site.posts %}
     {
       "title"    : "{{ post.title | escape }}",
       "category" : "{{ post.category }}",

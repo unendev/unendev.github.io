@@ -41,7 +41,7 @@ layout: default
 
 <div class="posts">
   {% for post in paginator.posts %}
-  {% unless post.draft or post.redirect_to %}
+  {% unless post.draft %}
     <article class="post">
       <h1>
         <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
