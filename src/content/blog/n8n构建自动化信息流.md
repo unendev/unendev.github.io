@@ -4,7 +4,8 @@ description: "背景  我之前通过PipeDream + Make.com构建了discord -obsid
 pubDate: "2025-08-17"
 pillar: tools
 tags: ["n8n","自动化","Discord","WebDAV","Python"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "n8n构建自动化信息流"
 ---

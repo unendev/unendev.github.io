@@ -4,7 +4,8 @@ description: "背景  继续之前的MOD开发：为 Todolist（待办事项）�
 pubDate: "2025-08-24"
 pillar: engineering
 tags: ["游戏开发","DST Lua","Mod","UI","Debug"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "饥荒Mod调试日志-从致命崩溃到UI实时刷新"
 ---

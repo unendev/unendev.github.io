@@ -4,7 +4,8 @@ description: "背景 我之前写了一个Python程序，用来统计每天的�
 pubDate: "2025-07-26 14:00:00 +0800"
 pillar: engineering
 tags: ["Python","编码","底层"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "windows底层编码冲突"
 ---

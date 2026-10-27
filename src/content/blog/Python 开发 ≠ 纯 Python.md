@@ -4,7 +4,8 @@ description: "背景：自动化的翻译制卡需求  我最近在用一款开�
 pubDate: "2025-7-25"
 pillar: engineering
 tags: ["Windows","Python","Rust","C++","依赖"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "Python-开发-纯-Python"
 ---

@@ -34,6 +34,27 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://unendev.
     <meta name="description" content={description} />
     {articleDate && <meta property="article:published_time" content={articleDate} />}
 
+    <!-- Webmaster Verification -->
+    <meta name="google-site-verification" content="jZVkTL8GMwib8C3CNigHbKMOJbhPwoiTJ-mpYP4hBtE" />
+    <meta name="baidu-site-verification" content="codeva-rZAzf9dKqZ" />
+
+    <!-- RSS Feed Discovery -->
+    <link rel="alternate" type="application/rss+xml" title="渥奇的思考卷轴" href="/feed.xml" />
+
+    <!-- Google tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R0LNH4VZVX"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-R0LNH4VZVX');
+    </script>
+
+    <!-- Google Fonts: Noto Serif SC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />

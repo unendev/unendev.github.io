@@ -4,7 +4,8 @@ description: "最近，我在为我的个人网站添加新的功能，遇到了
 pubDate: "2025-9-20"
 pillar: ai_universe
 tags: ["React","AI","Debug","前端","后端"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "Nexus-3-一次贯穿前后端的bug修复"
 ---

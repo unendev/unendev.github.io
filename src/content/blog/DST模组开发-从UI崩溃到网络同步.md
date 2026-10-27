@@ -4,7 +4,8 @@ description: "一、基础实现：物品与静态UI  第一阶段的目标是�
 pubDate: "2025-8-6"
 pillar: tools
 tags: ["DST","Modding","Lua","游戏开发"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "DST模组开发-从UI崩溃到网络同步"
 ---

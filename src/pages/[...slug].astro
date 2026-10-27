@@ -37,7 +37,7 @@ export interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, pillar, tags, author } = post.data;
+const { title, description, pubDate, pillar, tags, author = '渥奇', aiCompanion = 'Antigravity' } = post.data;
 
 const { Content, headings } = await post.render();
 
@@ -59,9 +59,41 @@ const sortedPosts = allPosts.sort((a, b) => new Date(b.data.pubDate).getTime() -
 const currentIndex = sortedPosts.findIndex((p) => p.slug === post.slug);
 const prevPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
 const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description || title,
+  "datePublished": dateStr,
+  "author": [
+    {
+      "@type": "Person",
+      "name": author || "渥奇",
+      "url": "https://unendev.github.io/about"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": aiCompanion || "Antigravity",
+      "applicationCategory": "AI Collaborator",
+      "description": "协同助笔与思想伴读"
+    }
+  ],
+  "publisher": {
+    "@type": "Person",
+    "name": "渥奇"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": Astro.url.href
+  }
+};
 ---
 
 <BaseLayout title={title} description={description} articleDate={dateStr}>
+  <!-- Schema.org BlogPosting JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-14">
     <!-- Top Bar: Back link -->
     <div class="mb-8 flex items-center justify-between">
@@ -84,22 +116,24 @@ const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
 
     <!-- Article Header -->
     <header class="max-w-4xl mx-auto mb-12 text-center">
-      <div class="flex flex-wrap items-center justify-center gap-3 text-xs font-mono text-slate-400 mb-4">
+      <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-xs font-mono text-slate-400 mb-4">
         <time datetime={dateStr}>{dateStr}</time>
         <span>·</span>
         <span>约 {wordCount} 字</span>
         <span>·</span>
         <span>预计阅读 {readTimeMin} 分钟</span>
         <span>·</span>
-        <span>作者：{author}</span>
+        <span class="text-slate-200">作者：<strong class="text-slate-100">{author}</strong></span>
+        <span>·</span>
+        <span class="text-slate-300">协同助笔：<strong class="text-sky-300">{aiCompanion}</strong></span>
       </div>
 
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-100 tracking-tight leading-tight mb-6">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold font-serif text-slate-100 tracking-tight leading-tight mb-6">
         {title}
       </h1>
 
       {description && (
-        <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed mb-6 font-normal">
+        <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed mb-6 font-serif">
           {description}
         </p>
       )}
@@ -117,16 +151,32 @@ const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
       </div>
     </header>
 
-    <!-- Main Content Layout (Grid with Sticky TOC on desktop) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-      <!-- Article Body -->
-      <main class="lg:col-span-8 lg:col-start-2 xl:col-span-8 xl:col-start-2">
-        <article class="prose prose-invert prose-slate max-w-none prose-headings:scroll-mt-24 prose-img:rounded-xl prose-img:border prose-img:border-[#23304a] prose-img:shadow-xl">
+    <!-- Main Content Layout (Grid with Sticky TOC on desktop: lg & xl) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+      <!-- Article Body (8 cols on lg, 9 cols on xl for optimal reading breadth) -->
+      <main class="lg:col-span-8 xl:col-span-9">
+        <article class="prose prose-invert prose-slate max-w-none font-serif text-slate-200 text-base sm:text-lg leading-relaxed prose-headings:font-serif prose-headings:scroll-mt-24 prose-img:rounded-xl prose-img:border prose-img:border-[#23304a] prose-img:shadow-xl">
           <Content />
         </article>
 
+        <!-- Editorial Colophon Card -->
+        <div class="mt-14 p-6 sm:p-7 rounded-2xl bg-[#0f1523]/80 border border-[#23304a]/80 shadow-inner">
+          <div class="flex items-center gap-2.5 text-sm font-bold text-slate-200 mb-3">
+            <span class="text-base">✒️</span>
+            <span>署名与创作协约 (Editorial Colophon)</span>
+          </div>
+          <div class="space-y-2.5 text-xs sm:text-sm leading-relaxed text-slate-300 font-serif">
+            <p>
+              <strong class="text-slate-100 font-sans">第一作者：渥奇</strong> —— 负责核心命题立论、底层真实生活与工程经验、思想实验设计及终审裁决。
+            </p>
+            <p class="text-slate-400">
+              <strong class="text-slate-200 font-sans">协同助笔：Antigravity (Google DeepMind)</strong> —— 具身于宿主机本地中枢的 AI 协作者。承担长程对抗性命题推演、底层系统法医验证、长篇结构编排与代码同构。作为思考的磨刀石与深时间无主图书馆，所有文本均在双向对抗审查与人类第一作者终审签字后方始落盘。
+            </p>
+          </div>
+        </div>
+
         <!-- Adjacent Posts Navigation -->
-        <div class="mt-16 pt-8 border-t border-[#23304a] grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="mt-12 pt-8 border-t border-[#23304a] grid grid-cols-1 sm:grid-cols-2 gap-4">
           {prevPost ? (
             <a
               href={`/${prevPost.data.legacySlug || prevPost.slug}/`}
@@ -157,15 +207,15 @@ const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
         </div>
       </main>
 
-      <!-- Right Floating Table of Contents (TOC) -->
+      <!-- Right Floating Table of Contents (TOC) - Now visible on ALL screens >= 1024px (lg & xl) -->
       {tocHeadings.length > 0 && (
-        <aside class="hidden xl:block xl:col-span-3">
+        <aside class="hidden lg:block lg:col-span-4 xl:col-span-3">
           <div class="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
             <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
               <span>📜</span>
               <span>文章大纲 (TOC)</span>
             </div>
-            <nav class="space-y-1 text-xs border-l border-slate-800">
+            <nav id="desktop-toc" class="space-y-1 text-xs border-l border-slate-800">
               {tocHeadings.map((h) => (
                 <a
                   href={`#${h.slug}`}
@@ -183,11 +233,69 @@ const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
       )}
     </div>
 
-    <!-- Floating Quick Back-To-Top / Return Button -->
+    <!-- Mobile / Tablet TOC Drawer & Trigger Button (< 1024px) -->
+    {tocHeadings.length > 0 && (
+      <div class="lg:hidden">
+        <!-- Floating Mobile TOC Button -->
+        <button
+          id="mobile-toc-toggle-btn"
+          class="fixed bottom-20 right-6 z-40 p-3 rounded-full bg-[#162035]/95 text-sky-400 border border-[#23304a] shadow-xl backdrop-blur-md flex items-center gap-1.5 text-xs font-medium hover:bg-sky-600 hover:text-white transition-all"
+          aria-label="展开文章大纲"
+          title="展开文章大纲"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
+          </svg>
+          <span>目录</span>
+        </button>
+
+        <!-- Off-canvas Mobile TOC Drawer -->
+        <div
+          id="mobile-toc-drawer"
+          class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"
+        >
+          <div
+            id="mobile-toc-panel"
+            class="fixed right-0 top-0 bottom-0 w-80 max-w-[85vw] bg-[#0d121f] border-l border-[#23304a] p-6 shadow-2xl transform translate-x-full transition-transform duration-300 overflow-y-auto"
+          >
+            <div class="flex items-center justify-between pb-4 border-b border-[#23304a] mb-4">
+              <div class="flex items-center gap-2 font-bold text-sm text-slate-200">
+                <span>📜</span>
+                <span>文章大纲 (TOC)</span>
+              </div>
+              <button
+                id="mobile-toc-close-btn"
+                class="p-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                aria-label="关闭目录"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <nav id="mobile-toc-nav" class="space-y-2 text-xs border-l border-slate-800">
+              {tocHeadings.map((h) => (
+                <a
+                  href={`#${h.slug}`}
+                  class={`block py-1.5 text-slate-300 hover:text-sky-400 border-l -ml-[1px] border-transparent transition-colors ${
+                    h.depth === 2 ? 'pl-3 font-medium text-sm' : 'pl-6 text-xs text-slate-400'
+                  }`}
+                  data-heading-slug={h.slug}
+                >
+                  {h.text}
+                </a>
+              ))}
+            </nav>
+          </div>
+        </div>
+      </div>
+    )}
+
+    <!-- Floating Quick Back-To-Top Button -->
     <div class="fixed bottom-6 right-6 z-40 flex flex-col gap-2">
       <button
         id="back-to-top-btn"
-        class="p-3 rounded-full bg-[#162035] text-slate-300 hover:text-white hover:bg-sky-600 border border-[#23304a] shadow-lg transition-all opacity-0 pointer-events-none"
+        class="p-3 rounded-full bg-[#162035]/95 text-slate-300 hover:text-white hover:bg-sky-600 border border-[#23304a] shadow-lg backdrop-blur-md transition-all opacity-0 pointer-events-none"
         aria-label="返回顶部"
         title="返回顶部"
       >
@@ -216,10 +324,45 @@ const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
       });
     }
 
-    // 2. Dynamic TOC Active Highlight via IntersectionObserver
-    const tocLinks = document.querySelectorAll('nav a[data-heading-slug]');
-    if (tocLinks.length > 0) {
-      const headingElements = Array.from(tocLinks)
+    // 2. Mobile TOC Drawer Controls
+    const mobileToggleBtn = document.getElementById('mobile-toc-toggle-btn');
+    const mobileDrawer = document.getElementById('mobile-toc-drawer');
+    const mobilePanel = document.getElementById('mobile-toc-panel');
+    const mobileCloseBtn = document.getElementById('mobile-toc-close-btn');
+
+    function openMobileToc() {
+      if (!mobileDrawer || !mobilePanel) return;
+      mobileDrawer.classList.remove('opacity-0', 'pointer-events-none');
+      mobileDrawer.classList.add('opacity-100');
+      mobilePanel.classList.remove('translate-x-full');
+      mobilePanel.classList.add('translate-x-0');
+    }
+
+    function closeMobileToc() {
+      if (!mobileDrawer || !mobilePanel) return;
+      mobileDrawer.classList.add('opacity-0', 'pointer-events-none');
+      mobileDrawer.classList.remove('opacity-100');
+      mobilePanel.classList.add('translate-x-full');
+      mobilePanel.classList.remove('translate-x-0');
+    }
+
+    if (mobileToggleBtn) mobileToggleBtn.addEventListener('click', openMobileToc);
+    if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileToc);
+    if (mobileDrawer) {
+      mobileDrawer.addEventListener('click', (e) => {
+        if (e.target === mobileDrawer) closeMobileToc();
+      });
+    }
+
+    // Auto-close drawer when clicking any link inside mobile TOC
+    document.querySelectorAll('#mobile-toc-nav a').forEach((link) => {
+      link.addEventListener('click', closeMobileToc);
+    });
+
+    // 3. Dynamic TOC Active Highlight via IntersectionObserver (ScrollSpy)
+    const allTocLinks = document.querySelectorAll('nav a[data-heading-slug]');
+    if (allTocLinks.length > 0) {
+      const headingElements = Array.from(allTocLinks)
         .map((link) => {
           const slug = link.getAttribute('data-heading-slug');
           return slug ? document.getElementById(slug) : null;
@@ -231,7 +374,7 @@ const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               const id = entry.target.id;
-              tocLinks.forEach((link) => {
+              allTocLinks.forEach((link) => {
                 if (link.getAttribute('data-heading-slug') === id) {
                   link.classList.add('text-sky-400', 'border-sky-400', 'font-semibold');
                   link.classList.remove('text-slate-400', 'border-transparent');

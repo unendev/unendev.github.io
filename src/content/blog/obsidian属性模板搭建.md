@@ -4,7 +4,8 @@ description: "一、属性、标签与书签  obsidian提供了三种工具来�
 pubDate: "2025-07-31"
 pillar: tools
 tags: ["Obsidian","工作流","自动化","知识管理"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "obsidian属性模板搭建"
 ---

@@ -34,6 +34,14 @@ export default {
           '"Microsoft YaHei"',
           'sans-serif',
         ],
+        serif: [
+          '"Noto Serif SC"',
+          '"Source Han Serif SC"',
+          '"Songti SC"',
+          'SimSun',
+          'STSong',
+          'serif',
+        ],
         mono: [
           '"JetBrains Mono"',
           '"Fira Code"',
@@ -47,6 +55,7 @@ export default {
           css: {
             maxWidth: '100%',
             color: '#cbd5e1',
+            lineHeight: '1.8',
             a: {
               color: '#38bdf8',
               textDecoration: 'none',

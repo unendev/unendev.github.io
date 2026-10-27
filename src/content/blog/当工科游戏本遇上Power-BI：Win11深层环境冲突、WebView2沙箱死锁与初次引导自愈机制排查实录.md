@@ -4,7 +4,8 @@ description: "在跨越数千公里的远程运维现场，往往隐藏着最极
 pubDate: "2026-10-26 23:10:00 +0800"
 pillar: engineering
 tags: ["Power BI","Windows 11","排坑记录","系统架构","WebView2"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "当工科游戏本遇上Power-BI-Win11深层环境冲突-WebView2沙箱死锁与初次引导自愈机制排查实录"
 ---

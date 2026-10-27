@@ -4,7 +4,8 @@ description: "在与大语言模型持续数小时的深入探讨中，我们最
 pubDate: "2026-10-24 23:55:00 +0800"
 pillar: ai_universe
 tags: ["AI","思考","未来","认知科学","哲学"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "在三种速度的剪刀差中生活-从AI自我递归的物理阻尼到非人类智慧的尺度"
 ---

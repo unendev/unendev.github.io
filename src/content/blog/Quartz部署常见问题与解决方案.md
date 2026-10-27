@@ -4,7 +4,8 @@ description: "背景  我使用 Obsidian 作为本地知识管理工具，因为
 pubDate: "2025-7-28"
 pillar: tools
 tags: ["Obsidian","Github","自动化","部署","知识管理"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "Quartz部署常见问题与解决方案"
 ---

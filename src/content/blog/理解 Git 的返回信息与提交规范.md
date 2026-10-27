@@ -4,7 +4,8 @@ description: "背景  git add ., git commit, git push 是推送项目时常用�
 pubDate: "2025-07-29"
 pillar: engineering
 tags: ["Git","规范"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "理解-Git-的返回信息与提交规范"
 ---

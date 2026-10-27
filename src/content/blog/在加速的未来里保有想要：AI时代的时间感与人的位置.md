@@ -4,7 +4,8 @@ description: "和 AI 讨论未来，最初的问题看起来像预测题：科�
 pubDate: "2026-10-24"
 pillar: ai_universe
 tags: ["AI","思考","未来","人生"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "在加速的未来里保有想要-AI时代的时间感与人的位置"
 ---

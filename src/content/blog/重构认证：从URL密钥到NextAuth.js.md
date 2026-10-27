@@ -4,7 +4,8 @@ description: "背景  项目初期，为方便个人使用，我采用了一种�
 pubDate: "2025-09-18"
 pillar: engineering
 tags: ["Next.js","Security","Authentication"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "重构认证-从URL密钥到NextAuth.js"
 ---

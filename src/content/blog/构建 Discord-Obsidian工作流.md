@@ -4,7 +4,8 @@ description: "背景  自从养成记录知识的习惯后，我的知识库便�
 pubDate: "2025-8-10"
 pillar: tools
 tags: ["PKM","Obsidian","Discord","自动化"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "构建-Discord-Obsidian工作流"
 ---

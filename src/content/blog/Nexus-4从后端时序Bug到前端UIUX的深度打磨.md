@@ -4,7 +4,8 @@ description: "一、深入理解乐观更新与异步时序  **1. 发现问题**
 pubDate: "2025-9-23"
 pillar: engineering
 tags: ["React","Debug","前端","后端","TS"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "Nexus-4从后端时序Bug到前端UIUX的深度打磨"
 ---

@@ -4,7 +4,8 @@ description: "下午在网易云音乐挂着“心动模式”，算法在连绵
 pubDate: "2026-10-25 13:10:00 +0800"
 pillar: ai_universe
 tags: ["音乐","思考","二次元","文化"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "在最欢快的旋律里化作泡沫-从Mermaid-girl-senya到甜美电波下的残酷童话"
 ---

@@ -4,7 +4,8 @@ description: "作为一个重度开发工作流用户，“长期开机、以睡
 pubDate: "2026-10-24"
 pillar: engineering
 tags: ["Windows","性能优化","踩坑记录","架构设计","调试"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "以睡眠代替重启-Windows-11-长期开机下的微顿挫法医级诊断与桌面抗衰老实践"
 ---

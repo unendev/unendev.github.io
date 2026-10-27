@@ -4,7 +4,8 @@ description: "背景  评论区是一个博客的应有功能，但静态博客�
 pubDate: "2025-8-31"
 pillar: engineering
 tags: ["博客","Vercel","优化","域名"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "博客评论系统集成-从-Waline-部署到加载性能优化"
 ---

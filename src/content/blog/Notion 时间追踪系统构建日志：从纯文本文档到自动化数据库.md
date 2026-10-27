@@ -4,7 +4,8 @@ description: "背景  我很久之前开始使用柳比歇伏计时法，我的�
 pubDate: "2025-08-27"
 pillar: tools
 tags: ["Notion","工作流","自动化","数据库","API"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "Notion-时间追踪系统构建日志-从纯文本文档到自动化数据库"
 ---

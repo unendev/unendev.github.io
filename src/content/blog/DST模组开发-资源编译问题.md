@@ -4,7 +4,8 @@ description: "背景  作为《饥荒：联机版》(DST)玩家，在长时间�
 pubDate: "2025-8-2"
 pillar: engineering
 tags: ["DST","Modding","Lua","游戏开发"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "DST模组开发-资源编译问题"
 ---

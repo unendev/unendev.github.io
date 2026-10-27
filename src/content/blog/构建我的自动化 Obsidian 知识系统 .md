@@ -4,7 +4,8 @@ description: "背景  刚开始使用 Obsidian 时，我沿用了一直以来的
 pubDate: "2025-7-27"
 pillar: tools
 tags: ["Obsidian","自动化","知识管理"]
-author: "helpfulcraft"
+author: "渥奇"
+aiCompanion: "Antigravity"
 comments: true
 legacySlug: "构建我的自动化-Obsidian-知识系统"
 ---
