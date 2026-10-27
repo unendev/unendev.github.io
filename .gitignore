@@ -1,4 +1,25 @@
-# jekyll local file
+# Build artifacts
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Legacy Jekyll
+_site/
 .jekyll*
-_site
-node_modules
+.sass-cache/
+legacy_jekyll/
+
+# Logs & Environment
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db

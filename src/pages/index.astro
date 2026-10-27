@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { PILLARS, SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => {
+  const dateA = new Date(a.data.pubDate).getTime();
+  const dateB = new Date(b.data.pubDate).getTime();
+  return dateB - dateA;
+});
+
+// Calculate counts per pillar
+const pillarCounts: Record<string, number> = {};
+allPosts.forEach((p) => {
+  const pil = p.data.pillar || 'engineering';
+  pillarCounts[pil] = (pillarCounts[pil] || 0) + 1;
+});
+
+const pillars = Object.values(PILLARS);
+---
+
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+    <!-- Hero Section -->
+    <section class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-950/50 border border-sky-800/40 text-sky-400 text-xs font-mono mb-6">
+        <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+        <span>Astro 静态架构 · 本地优先 SSOT 同步</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-100 tracking-tight leading-tight mb-6">
+        在加速的时代保有思考，<br class="hidden sm:inline" />
+        以硬核法医对抗系统衰老。
+      </h1>
+
+      <p class="text-base sm:text-lg text-slate-400 leading-relaxed mb-8">
+        专注于 Windows 底层法医、AI 递归物理阻尼、二游叙事批评与个人数字主权。
+        将长程思考落盘为可索引、可推演的永久静态卷轴。
+      </p>
+
+      <div class="flex items-center justify-center gap-6 text-sm font-mono text-slate-400">
+        <div class="flex flex-col items-center">
+          <span class="text-2xl font-bold text-sky-400">{allPosts.length}</span>
+          <span class="text-xs text-slate-500">已收录长文</span>
+        </div>
+        <div class="w-px h-8 bg-slate-800"></div>
+        <div class="flex flex-col items-center">
+          <span class="text-2xl font-bold text-purple-400">4</span>
+          <span class="text-xs text-slate-500">一等公民支柱</span>
+        </div>
+        <div class="w-px h-8 bg-slate-800"></div>
+        <div class="flex flex-col items-center">
+          <span class="text-2xl font-bold text-emerald-400">0</span>
+          <span class="text-xs text-slate-500">控制标记泄漏</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Four Pillars Grid -->
+    <section class="mb-16">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-lg font-bold text-slate-200 flex items-center gap-2">
+          <span>🏛️</span>
+          <span>四大思想支柱</span>
+        </h2>
+        <span class="text-xs text-slate-500 font-mono">按领域聚合浏览</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {pillars.map((p) => {
+          const count = pillarCounts[p.id] || 0;
+          return (
+            <a
+              href={`/pillar/${p.id}`}
+              class="group relative flex flex-col p-5 rounded-2xl bg-[#111827]/60 border border-[#23304a] hover:border-slate-600 hover:bg-[#162035] transition-all duration-300"
+            >
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-2xl">{p.icon}</span>
+                <span
+                  class="text-xs font-mono font-semibold px-2 py-0.5 rounded-full border"
+                  style={{
+                    color: p.color,
+                    backgroundColor: p.badgeBg,
+                    borderColor: `${p.color}40`,
+                  }}
+                >
+                  {count} 篇
+                </span>
+              </div>
+              <h3 class="text-base font-bold text-slate-100 group-hover:text-white transition-colors mb-1">
+                {p.name}
+              </h3>
+              <p class="text-xs text-slate-400 leading-relaxed mb-4 line-clamp-2">
+                {p.tagline}
+              </p>
+              <span
+                class="mt-auto text-xs font-medium flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+                style={{ color: p.color }}
+              >
+                进入专区 →
+              </span>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- Recent Articles Stream -->
+    <section>
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-100 tracking-tight">全部思考卷轴</h2>
+          <p class="text-xs text-slate-400 mt-1">按最后发布时间倒序排列</p>
+        </div>
+        <span class="text-xs font-mono text-slate-500">共 {sortedPosts.length} 篇</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {sortedPosts.map((post) => (
+          <ArticleCard post={post} />
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

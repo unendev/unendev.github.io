@@ -1,0 +1,250 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  articleDate?: string;
+}
+
+const {
+  title = "渥奇的思考卷轴",
+  description = "关于硬核工程、AI思辨、游戏文学与数字主权的深度思考与长篇技术复盘。",
+  image = "/images/avatar.jpg",
+  articleDate
+} = Astro.props;
+
+const fullTitle = title === "渥奇的思考卷轴" ? title : `${title} · 渥奇的思考卷轴`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://unendev.github.io');
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    {articleDate && <meta property="article:published_time" content={articleDate} />}
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, canonicalURL)} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={fullTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, canonicalURL)} />
+
+    <!-- 100% Offline Mermaid Engine -->
+    <script is:inline src="/vendor/mermaid.min.js"></script>
+  </head>
+  <body class="bg-[#090d16] text-slate-100 antialiased selection:bg-sky-500/30 selection:text-sky-200">
+    <Header />
+
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <!-- Global Gesture Floating Indicator (Anti-Fatigue) -->
+    <div id="gesture-indicator" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center hidden transition-opacity duration-150">
+      <div class="px-6 py-3.5 rounded-2xl bg-[#0d131f]/95 text-sky-400 font-bold text-sm border border-sky-500/50 shadow-2xl backdrop-blur-md flex items-center gap-2.5 animate-pulse">
+        <svg class="w-5 h-5 -rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+        </svg>
+        <span>向左滑动 · 返回上一页</span>
+      </div>
+    </div>
+
+    <!-- Client-side Interactive Enhancements: Offline Mermaid, Code Copy, Mouse Drag Gestures -->
+    <script>
+      // 1. 100% Offline Mermaid Renderer via Local mermaid.min.js
+      function initMermaid() {
+        const mermaidCodeBlocks = document.querySelectorAll('pre.language-mermaid, pre code.language-mermaid, div.language-mermaid, pre[data-language="mermaid"]');
+        if (mermaidCodeBlocks.length === 0) return;
+
+        const mermaid = (window as any).mermaid;
+        if (!mermaid) {
+          console.warn('[Mermaid Warning]: Local window.mermaid not yet ready');
+          return;
+        }
+
+        try {
+          mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            themeVariables: {
+              darkMode: true,
+              background: '#0d131f',
+              primaryColor: '#1e293b',
+              primaryTextColor: '#f8fafc',
+              primaryBorderColor: '#38bdf8',
+              lineColor: '#64748b',
+              secondaryColor: '#334155',
+              tertiaryColor: '#090d16',
+            },
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          });
+
+          mermaidCodeBlocks.forEach(async (el, idx) => {
+            const code = el.textContent || '';
+            const container = document.createElement('div');
+            container.className = 'mermaid-container my-6 p-4 rounded-xl border border-[#23304a] bg-[#0d131f] flex justify-center';
+            const graphId = `mermaid-svg-${idx}-${Date.now()}`;
+            
+            try {
+              const { svg } = await mermaid.render(graphId, code.trim());
+              container.innerHTML = svg;
+              const targetToReplace = el.tagName.toLowerCase() === 'code' ? el.parentElement : el;
+              if (targetToReplace && targetToReplace.parentElement) {
+                targetToReplace.parentElement.replaceChild(container, targetToReplace);
+              }
+            } catch (renderErr) {
+              console.warn('[Mermaid Render Error]:', renderErr);
+            }
+          });
+        } catch (loadErr) {
+          console.warn('[Mermaid Initialization Warning]:', loadErr);
+        }
+      }
+
+      // 2. Code Block Copy Button
+      function initCodeCopy() {
+        document.querySelectorAll('pre.astro-code').forEach((pre) => {
+          if (pre.querySelector('.copy-code-btn')) return;
+
+          const btn = document.createElement('button');
+          btn.className = 'copy-code-btn';
+          btn.setAttribute('aria-label', '复制代码');
+          btn.innerHTML = '复制';
+
+          btn.addEventListener('click', async () => {
+            const code = pre.querySelector('code')?.innerText || (pre as HTMLElement).innerText;
+            try {
+              await navigator.clipboard.writeText(code);
+              btn.innerHTML = '✓ 已复制';
+              btn.classList.add('text-emerald-400');
+              setTimeout(() => {
+                btn.innerHTML = '复制';
+                btn.classList.remove('text-emerald-400');
+              }, 2000);
+            } catch (err) {
+              btn.innerHTML = '失败';
+            }
+          });
+
+          pre.appendChild(btn);
+        });
+      }
+
+      // 3. Anti-Fatigue Mouse Gestures (Right-Drag Left >= 45px), Contextmenu Breaker & Shortcuts
+      function initGestureAndNavigation() {
+        let isRightMouseDown = false;
+        let gestureStartX = 0;
+        let gestureStartY = 0;
+        let isGestureTriggered = false;
+        let suppressNextContextMenu = false;
+
+        const indicator = document.getElementById('gesture-indicator');
+
+        // Right mouse down: Record start position
+        window.addEventListener('mousedown', (e) => {
+          if (e.button === 2 && window.location.pathname !== '/') {
+            isRightMouseDown = true;
+            gestureStartX = e.clientX;
+            gestureStartY = e.clientY;
+            isGestureTriggered = false;
+          }
+        });
+
+        // Mouse move: Detect horizontal drag left >= 45px
+        window.addEventListener('mousemove', (e) => {
+          if (!isRightMouseDown || window.location.pathname === '/') return;
+          const dx = e.clientX - gestureStartX;
+          const dy = e.clientY - gestureStartY;
+
+          // Drag left reached 45px threshold and horizontal component dominates
+          if (dx < -45 && Math.abs(dx) > Math.abs(dy) * 1.1) {
+            isGestureTriggered = true;
+            suppressNextContextMenu = true;
+            if (indicator) indicator.classList.remove('hidden');
+          } else if (dx > -20 && isGestureTriggered) {
+            // User backed out, cancel gesture
+            isGestureTriggered = false;
+            if (indicator) indicator.classList.add('hidden');
+          }
+        });
+
+        // Mouse up: Trigger navigation if gesture satisfied
+        window.addEventListener('mouseup', (e) => {
+          // Handle mouse back button (button 3)
+          if (e.button === 3 && window.location.pathname !== '/') {
+            e.preventDefault();
+            navigateBack();
+            return;
+          }
+
+          if (e.button === 2 && isRightMouseDown) {
+            isRightMouseDown = false;
+            if (indicator) indicator.classList.add('hidden');
+
+            if (isGestureTriggered && window.location.pathname !== '/') {
+              isGestureTriggered = false;
+              navigateBack();
+            }
+          }
+        });
+
+        // Contextmenu Circuit Breaker (capture: true to intercept before browser shows context menu)
+        window.addEventListener('contextmenu', (e) => {
+          if (suppressNextContextMenu) {
+            e.preventDefault();
+            suppressNextContextMenu = false;
+          }
+        }, true);
+
+        // Global Esc Key Back Navigation
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && window.location.pathname !== '/') {
+            navigateBack();
+          }
+        });
+
+        function navigateBack() {
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            window.location.href = '/';
+          }
+        }
+      }
+
+      // Execute on DOM loaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          initMermaid();
+          initCodeCopy();
+          initGestureAndNavigation();
+        });
+      } else {
+        initMermaid();
+        initCodeCopy();
+        initGestureAndNavigation();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+---
+import PillarBadge from './PillarBadge.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, pillar, tags } = post.data;
+
+const dateStr = pubDate instanceof Date
+  ? pubDate.toISOString().slice(0, 10)
+  : String(pubDate).slice(0, 10);
+---
+
+<article class="group relative flex flex-col p-6 rounded-2xl bg-[#111827]/70 border border-[#23304a]/80 hover:border-sky-500/50 hover:bg-[#162035]/80 transition-all duration-300 shadow-lg shadow-black/20 hover:shadow-sky-500/5">
+  <div class="flex items-center justify-between gap-3 mb-3">
+    <PillarBadge pillar={pillar} size="sm" />
+    <time datetime={dateStr} class="text-xs font-mono text-slate-400">
+      {dateStr}
+    </time>
+  </div>
+
+  <h2 class="text-xl font-bold text-slate-100 group-hover:text-sky-400 transition-colors line-clamp-2 mb-2 leading-snug">
+    <a href={`/${post.data.legacySlug || post.slug}/`} class="focus:outline-none">
+      <span class="absolute inset-0 z-0"></span>
+      {title}
+    </a>
+  </h2>
+
+  {description && (
+    <p class="text-sm text-slate-400 line-clamp-2 mb-4 leading-relaxed relative z-10">
+      {description}
+    </p>
+  )}
+
+  <div class="mt-auto pt-3 border-t border-[#23304a]/60 flex items-center justify-between relative z-10">
+    <div class="flex flex-wrap gap-1.5">
+      {tags.slice(0, 3).map((tag) => (
+        <span class="text-[11px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60">
+          #{tag}
+        </span>
+      ))}
+      {tags.length > 3 && (
+        <span class="text-[11px] font-mono text-slate-500 px-1 py-0.5">
+          +{tags.length - 3}
+        </span>
+      )}
+    </div>
+
+    <span class="text-xs font-medium text-sky-400 group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
+      阅读全文
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </span>
+  </div>
+</article>

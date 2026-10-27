@@ -1,0 +1,252 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PillarBadge from '../components/PillarBadge.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const paths: { params: { slug: string }; props: { post: CollectionEntry<'blog'> } }[] = [];
+  const seenSlugs = new Set<string>();
+
+  for (const post of posts) {
+    // 1. Astro default calculated slug
+    if (!seenSlugs.has(post.slug)) {
+      paths.push({
+        params: { slug: post.slug },
+        props: { post },
+      });
+      seenSlugs.add(post.slug);
+    }
+
+    // 2. Exact historical legacy permalink (guarantees 0-404 on Linux/GitHub Pages)
+    const legSlug = post.data.legacySlug;
+    if (legSlug && !seenSlugs.has(legSlug)) {
+      paths.push({
+        params: { slug: legSlug },
+        props: { post },
+      });
+      seenSlugs.add(legSlug);
+    }
+  }
+
+  return paths;
+}
+
+export interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, pillar, tags, author } = post.data;
+
+const { Content, headings } = await post.render();
+
+// Estimate words & read time
+const textBody = post.body || '';
+const wordCount = textBody.replace(/\s+/g, '').length;
+const readTimeMin = Math.max(1, Math.ceil(wordCount / 400));
+
+const dateStr = pubDate instanceof Date
+  ? pubDate.toISOString().slice(0, 10)
+  : String(pubDate).slice(0, 10);
+
+// Filter h2 and h3 for clean TOC
+const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+
+// Find adjacent posts for previous / next navigation
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+const currentIndex = sortedPosts.findIndex((p) => p.slug === post.slug);
+const prevPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
+const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+---
+
+<BaseLayout title={title} description={description} articleDate={dateStr}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+    <!-- Top Bar: Back link -->
+    <div class="mb-8 flex items-center justify-between">
+      <a
+        href="/"
+        class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-400 hover:text-sky-400 transition-colors group"
+      >
+        <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        <span>返回首页</span>
+      </a>
+
+      <div class="flex items-center gap-2">
+        <a href={`/pillar/${pillar}`} class="hover:opacity-80 transition-opacity">
+          <PillarBadge pillar={pillar} size="sm" />
+        </a>
+      </div>
+    </div>
+
+    <!-- Article Header -->
+    <header class="max-w-4xl mx-auto mb-12 text-center">
+      <div class="flex flex-wrap items-center justify-center gap-3 text-xs font-mono text-slate-400 mb-4">
+        <time datetime={dateStr}>{dateStr}</time>
+        <span>·</span>
+        <span>约 {wordCount} 字</span>
+        <span>·</span>
+        <span>预计阅读 {readTimeMin} 分钟</span>
+        <span>·</span>
+        <span>作者：{author}</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-100 tracking-tight leading-tight mb-6">
+        {title}
+      </h1>
+
+      {description && (
+        <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed mb-6 font-normal">
+          {description}
+        </p>
+      )}
+
+      <!-- Tags list -->
+      <div class="flex flex-wrap items-center justify-center gap-2">
+        {tags.map((tag) => (
+          <a
+            href={`/tags#${encodeURIComponent(tag)}`}
+            class="text-xs font-mono text-slate-400 bg-slate-800/80 hover:bg-slate-700/80 hover:text-sky-300 px-2.5 py-1 rounded-md border border-slate-700/60 transition-colors"
+          >
+            #{tag}
+          </a>
+        ))}
+      </div>
+    </header>
+
+    <!-- Main Content Layout (Grid with Sticky TOC on desktop) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <!-- Article Body -->
+      <main class="lg:col-span-8 lg:col-start-2 xl:col-span-8 xl:col-start-2">
+        <article class="prose prose-invert prose-slate max-w-none prose-headings:scroll-mt-24 prose-img:rounded-xl prose-img:border prose-img:border-[#23304a] prose-img:shadow-xl">
+          <Content />
+        </article>
+
+        <!-- Adjacent Posts Navigation -->
+        <div class="mt-16 pt-8 border-t border-[#23304a] grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {prevPost ? (
+            <a
+              href={`/${prevPost.data.legacySlug || prevPost.slug}/`}
+              class="p-4 rounded-xl bg-[#111827]/70 border border-[#23304a] hover:border-sky-500/50 hover:bg-[#162035] transition-all flex flex-col group"
+            >
+              <span class="text-xs font-mono text-slate-500 mb-1 flex items-center gap-1">
+                ← 较早发表
+              </span>
+              <span class="text-sm font-bold text-slate-200 group-hover:text-sky-400 transition-colors line-clamp-1">
+                {prevPost.data.title}
+              </span>
+            </a>
+          ) : <div />}
+
+          {nextPost ? (
+            <a
+              href={`/${nextPost.data.legacySlug || nextPost.slug}/`}
+              class="p-4 rounded-xl bg-[#111827]/70 border border-[#23304a] hover:border-sky-500/50 hover:bg-[#162035] transition-all flex flex-col text-right group"
+            >
+              <span class="text-xs font-mono text-slate-500 mb-1 flex items-center justify-end gap-1">
+                较新发表 →
+              </span>
+              <span class="text-sm font-bold text-slate-200 group-hover:text-sky-400 transition-colors line-clamp-1">
+                {nextPost.data.title}
+              </span>
+            </a>
+          ) : <div />}
+        </div>
+      </main>
+
+      <!-- Right Floating Table of Contents (TOC) -->
+      {tocHeadings.length > 0 && (
+        <aside class="hidden xl:block xl:col-span-3">
+          <div class="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+              <span>📜</span>
+              <span>文章大纲 (TOC)</span>
+            </div>
+            <nav class="space-y-1 text-xs border-l border-slate-800">
+              {tocHeadings.map((h) => (
+                <a
+                  href={`#${h.slug}`}
+                  class={`block py-1 text-slate-400 hover:text-sky-400 hover:border-sky-400 border-l -ml-[1px] border-transparent transition-colors line-clamp-1 ${
+                    h.depth === 2 ? 'pl-3 font-medium' : 'pl-6 text-[11px]'
+                  }`}
+                  data-heading-slug={h.slug}
+                >
+                  {h.text}
+                </a>
+              ))}
+            </nav>
+          </div>
+        </aside>
+      )}
+    </div>
+
+    <!-- Floating Quick Back-To-Top / Return Button -->
+    <div class="fixed bottom-6 right-6 z-40 flex flex-col gap-2">
+      <button
+        id="back-to-top-btn"
+        class="p-3 rounded-full bg-[#162035] text-slate-300 hover:text-white hover:bg-sky-600 border border-[#23304a] shadow-lg transition-all opacity-0 pointer-events-none"
+        aria-label="返回顶部"
+        title="返回顶部"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // 1. Back to top button visibility
+    const btt = document.getElementById('back-to-top-btn');
+    if (btt) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+          btt.classList.remove('opacity-0', 'pointer-events-none');
+          btt.classList.add('opacity-100');
+        } else {
+          btt.classList.add('opacity-0', 'pointer-events-none');
+          btt.classList.remove('opacity-100');
+        }
+      });
+      btt.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // 2. Dynamic TOC Active Highlight via IntersectionObserver
+    const tocLinks = document.querySelectorAll('nav a[data-heading-slug]');
+    if (tocLinks.length > 0) {
+      const headingElements = Array.from(tocLinks)
+        .map((link) => {
+          const slug = link.getAttribute('data-heading-slug');
+          return slug ? document.getElementById(slug) : null;
+        })
+        .filter(Boolean) as HTMLElement[];
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              tocLinks.forEach((link) => {
+                if (link.getAttribute('data-heading-slug') === id) {
+                  link.classList.add('text-sky-400', 'border-sky-400', 'font-semibold');
+                  link.classList.remove('text-slate-400', 'border-transparent');
+                } else {
+                  link.classList.remove('text-sky-400', 'border-sky-400', 'font-semibold');
+                  link.classList.add('text-slate-400', 'border-transparent');
+                }
+              });
+            }
+          });
+        },
+        { rootMargin: '0px 0px -70% 0px', threshold: 0.1 }
+      );
+
+      headingElements.forEach((el) => observer.observe(el));
+    }
+  </script>
+</BaseLayout>

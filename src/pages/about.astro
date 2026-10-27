@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { PILLARS } from '../consts';
+
+const pillars = Object.values(PILLARS);
+---
+
+<BaseLayout title="关于我" description="渥奇的个人背景、工程法医实践与博客重构纪事">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-8 mb-12 pb-12 border-b border-[#23304a]">
+      <img
+        src="/images/avatar.jpg"
+        alt="渥奇的头像"
+        class="w-28 h-28 rounded-2xl object-cover border-2 border-sky-500/40 shadow-xl shadow-sky-500/10"
+      />
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-950/40 border border-sky-800/40 text-sky-400 text-xs font-mono mb-3">
+          <span>📍</span>
+          <span>信息系统与信息管理 · 硬核工程践行者</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-100 mb-4">
+          你好，我是渥奇 (helpfulcraft)
+        </h1>
+        <p class="text-base text-slate-300 leading-relaxed">
+          本科信息系统与信息管理专业在读。这里是我的个人长程思考卷轴，记录与分享在系统法医调试、AI 思辨、叙事批评与数字主权方面的硬核实战复盘。
+        </p>
+      </div>
+    </div>
+
+    <div class="space-y-12">
+      <!-- 关注领域 -->
+      <section>
+        <h2 class="text-xl font-bold text-slate-100 mb-6 flex items-center gap-2">
+          <span>🧭</span>
+          <span>核心思考支柱</span>
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {pillars.map((p) => (
+            <div class="p-5 rounded-xl bg-[#111827]/70 border border-[#23304a]">
+              <div class="text-xl mb-2">{p.icon}</div>
+              <h3 class="text-base font-bold text-slate-200 mb-1">{p.name}</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">{p.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- 架构演进 -->
+      <section class="prose prose-invert prose-slate max-w-none">
+        <h2>博客架构演进 (Jekyll → Astro)</h2>
+        <p>
+          本博客诞生于 2025 年，最初基于经典的 <code>jekyll-now</code> 模板。随着思考深度的演进与长文体系的成熟，旧版架构逐渐面临缺少原生公式排版、无矢量 Mermaid 支持、依赖 <code>&lt;!-- more --&gt;</code> 截断技术疤痕等物理阻尼。
+        </p>
+        <p>
+          2026 年，全站正式重构至现代 <strong>Astro 4.x</strong> 静态架构，实现与本地个人监控中枢 <strong>Pulse Monitor</strong> 的单一真理来源（SSOT）无缝直推，全面根除控制标记泄漏，保障 0-404 永久链接契约。
+        </p>
+      </section>
+
+      <!-- 版权声明 -->
+      <section class="p-6 rounded-2xl bg-[#111827]/40 border border-[#23304a] text-sm text-slate-400 leading-relaxed">
+        <h3 class="text-base font-bold text-slate-200 mb-2 flex items-center gap-2">
+          <span>📜</span>
+          <span>版权与联系方式</span>
+        </h3>
+        <p class="mb-2">
+          本博客所有文章均为原创思考与工程实录，版权归属于作者本人。如需转载或引用，请注明出处并保留原文永久链接。
+        </p>
+        <p>
+          交流与探讨请通过 GitHub Issues 或邮件与我联系。代码与配置开源托管于
+          <a href="https://github.com/helpfulcraft" target="_blank" rel="noopener noreferrer" class="text-sky-400 underline ml-1">
+            GitHub @helpfulcraft
+          </a>。
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

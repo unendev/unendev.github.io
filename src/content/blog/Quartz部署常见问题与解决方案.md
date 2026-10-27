@@ -1,0 +1,131 @@
+---
+title: "Quartz部署常见问题与解决方案"
+description: "背景  我使用 Obsidian 作为本地知识管理工具，因为存在分享某些笔记内容的需求，我希望找到一个能将Obsidian笔记发布为带有双向链接的网站的工具，最终我选择了 Quartz，一个专为 Obsidian 设计的静态网站生成器  ---  一、内容仓库与网站仓库分离  根据教程的标准，为了隔离私有笔记和公开代码，应当创建两个独立的仓库： 1.  my-obsidian-notes : 存放.md笔记文件，设置为**私有** 2."
+pubDate: "2025-7-28"
+pillar: tools
+tags: ["Obsidian","Github","自动化","部署","知识管理"]
+author: "helpfulcraft"
+comments: true
+legacySlug: "Quartz部署常见问题与解决方案"
+---
+
+### 背景
+
+我使用 Obsidian 作为本地知识管理工具，因为存在分享某些笔记内容的需求，我希望找到一个能将Obsidian笔记发布为带有双向链接的网站的工具，最终我选择了 [Quartz](https://quartz.jzhao.xyz/)，一个专为 Obsidian 设计的静态网站生成器
+
+---
+
+### 一、内容仓库与网站仓库分离
+
+根据教程的标准，为了隔离私有笔记和公开代码，应当创建两个独立的仓库：
+1.  `my-obsidian-notes` : 存放`.md`笔记文件，设置为**私有**
+2.  `digital-garden` : 存放 Quartz 框架，设置为**公开**
+
+### 二、项目初始化与关联
+#### 2.1 准备笔记仓库
+将本地的 Obsidian 文件夹初始化为 Git 仓库，推送到 GitHub
+1.  **在 GitHub 创建私有仓库 `my-obsidian-notes`**
+2.  **在本地 Obsidian 仓库目录执行操作**:
+    ```bash
+    cd "C:\...\Obsidian Vault"
+
+    git init
+    git branch -M main
+
+    # 创建 .gitignore 文件，排除 Obsidian 缓存
+    echo ".obsidian/workspace.json" > .gitignore
+  
+    # 添加、提交并推送
+    git add .
+    git commit -m "Initial commit of notes"
+    git remote add origin https://github.com/.../my-obsidian-notes.git
+    git push -u origin main
+    ```
+
+#### 2.2 准备网站仓库
+`fork` Quartz 的官方模板以创建自己的仓库，并拉取至本地
+1.  [Quartz 官方模板](https://github.com/jackyzha0/quartz) 
+    ```bash
+    git clone https://github.com/.../digital-garden.git
+    cd digital-garden
+    ```
+
+#### 2.3 建立关联
+使用 Git Submodule 链接私有笔记仓库至公开仓库。Quartz 默认从 `content` 读取笔记，子模块的目标文件夹应当命名为 `content`
+```bash
+git submodule add https://github.com/.../my-obsidian-notes.git content
+```
+>1. 子模块允许将一个外部的 Git 仓库作为主项目仓库的一个子目录。主仓库并不直接存储子模块仓库的所有代码文件，而是像一个快捷方式一样，只记录一个指向子模块特定提交（commit）的指针
+>2. 使用子模块通常是为了管理外部依赖、项目解耦与复用以及权限控制
+
+### 三、部署与权限配置
+
+#### 3.1 私有仓库访问权限
+
+GitHub Actions 第一次部署以失败告终，日志指出：
+`repository 'https://github.com/.../my-obsidian-notes.git' not found`
+
+经查阅，原因是 Action 默认**没有权限访问**私有仓库
+
+#### 3.2 解决方案：配置 SSH Deploy Key
+向 Actions 配置SSH凭证即可正常访问私有仓库
+1.  **生成 SSH 密钥对**:
+    ```bash
+    # -f 指定文件名，避免覆盖默认 SSH Key
+    ssh-keygen -t ed25519 -C "deployment key" -f "quartz_deploy_key"
+    ```
+     `quartz_deploy_key` 为私钥 ， `quartz_deploy_key.pub` 为公钥
+2.  **在 公开仓库 中配置私钥**:
+    *   **Settings -> Secrets and variables -> Actions**
+    *    **New repository secret**
+    *   **Name**: `SSH_PRIVATE_KEY`
+    *   **Value**: 填入私钥
+3.  **在 私有仓库 中配置公钥**:
+    *   **Settings -> Deploy keys**
+    *    **Add deploy key**
+    *   **Title**: `Quartz Site Builder`
+    *   **Key**: 填入公钥
+    *   **勾选 "Allow write access"**
+4.  修改 `.gitmodules` :
+    将`.gitmodules`中的 `url` 修改为 SSH 格式：
+    `url = git@github.com:.../my-obsidian-notes.git`
+5.  修改 `deploy.yml` :
+    使用 `actions/checkout@v4` 内置的 `ssh-key` 参数加载私钥
+
+### 四、规则配置与index文件
+
+#### 4.1 第三次部署失败：部署环境规则
+
+这次报错后查看日志，`build` 成功了，但`deploy`阶段失败了：
+`Branch "main" is not allowed to deploy to github-pages due to environment protection rules.`
+
+GitHub Pages 默认只允许仓库创建时的第一个分支进行部署，而我在后续的提交中修改了分支名
+**解决方案：**
+1.   **Settings -> Environments**。
+2.   **`github-pages`** 
+3.   **Deployment branches** ， `v4` 修改为 `main`
+
+#### 4.2 RSS Feed
+
+第四次部署通过了，但访问网站后显示的是 XML代码
+
+排查许久，发现原因是fork的quartz中默认不包含index文件，需要手动在obsidian中编写一个index作为网站入口
+```md
+# 我的数字花园
+
+欢迎来到我的数字花园！这里是我记录思考、知识和灵感的地方。
+
+## 最近的笔记
+
+- [[思维图]]
+- [[设定集]]
+- [[待并入]]
+## 关于
+
+这个网站使用 [Quartz](https://quartz.jzhao.xyz/) 构建，是一个基于 Obsidian 笔记的数字花园。 
+```
+
+### 总结
+> 1.  **笔记仓库设为私有**：便于保护不想公开的草稿。同时也能解决权限与部署问题
+> 2.  **子模块需优先提交**：必须先处理子模块的提交，再处理主项目的提交。如果没有推送子模块，那么主项目记录的将是一个“幽灵提交”
+> 3.  **SSH Key替代HTTPS**：SSH 协议基于非对称加密，私钥保存在本地，公钥部署在远程服务上。这种认证机制比 HTTPS 更安

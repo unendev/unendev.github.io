@@ -1,0 +1,30 @@
+---
+import { PILLARS } from '../consts';
+
+export interface Props {
+  pillar: string;
+  size?: 'sm' | 'md' | 'lg';
+  showIcon?: boolean;
+}
+
+const { pillar, size = 'sm', showIcon = true } = Astro.props;
+const info = PILLARS[pillar] || PILLARS.engineering;
+
+const sizeClasses = {
+  sm: 'text-xs px-2.5 py-0.5 rounded-full',
+  md: 'text-sm px-3 py-1 rounded-md',
+  lg: 'text-base px-4 py-1.5 rounded-lg',
+}[size];
+---
+
+<span
+  class={`inline-flex items-center gap-1.5 font-medium border transition-colors ${sizeClasses}`}
+  style={{
+    color: info.color,
+    backgroundColor: info.badgeBg,
+    borderColor: `${info.color}40`,
+  }}
+>
+  {showIcon && <span>{info.icon}</span>}
+  <span>{info.name}</span>
+</span>

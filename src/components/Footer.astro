@@ -1,0 +1,27 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="mt-auto border-t border-[#23304a]/70 bg-[#090d16]/90 py-10 text-center text-sm text-slate-400">
+  <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex flex-col md:items-start items-center gap-1">
+      <div class="flex items-center gap-2">
+        <span class="font-semibold text-slate-200">渥奇的思考卷轴</span>
+        <span>·</span>
+        <span>数字主权与深度工程实践</span>
+      </div>
+      <p class="text-xs text-slate-500">
+        © {currentYear} helpfulcraft. All rights reserved.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-6 text-xs text-slate-400">
+      <a href="/" class="hover:text-sky-400 transition-colors">首页</a>
+      <a href="/tags" class="hover:text-sky-400 transition-colors">标签分类</a>
+      <a href="/about" class="hover:text-sky-400 transition-colors">关于作者</a>
+      <a href="https://github.com/helpfulcraft/helpfulcraft.github.io" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition-colors">
+        GitHub 源码
+      </a>
+    </div>
+  </div>
+</footer>
