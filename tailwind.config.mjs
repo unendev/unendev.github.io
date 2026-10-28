@@ -86,6 +86,8 @@ export default {
               padding: '0.75rem 1rem',
               fontStyle: 'normal',
             },
+            'blockquote p:first-of-type::before': { content: '""' },
+            'blockquote p:last-of-type::after': { content: '""' },
             hr: { borderColor: '#23304a' },
             'ul > li::marker': { color: '#38bdf8' },
             'ol > li::marker': { color: '#38bdf8' },
