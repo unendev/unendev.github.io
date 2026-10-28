@@ -155,10 +155,12 @@ flowchart TD
 
 每根弦沿着全屏宽度离散化为 24 个精细采样节点。每个节点维护独立的能量包络状态 $E_t$：
 
-$$E_{t} = \begin{cases} 
+$$
+E_{t} = \begin{cases} 
 E_{t-1} + (A_t - E_{t-1}) \times \alpha_{\text{attack}}, & \text{若 } A_t > E_{t-1} \quad (\text{快速起振, } \alpha_{\text{attack}} = 0.65) \\ 
 E_{t-1} \times \lambda_{\text{release}}, & \text{若 } A_t \le E_{t-1} \quad (\text{指数缓释, } \lambda_{\text{release}} = 0.88) 
-\end{cases}$$
+\end{cases}
+$$
 
 这套物理滤波机制带来了立竿见影的质变：
 1. **真实尖角音高定位**：当钢琴重音或电音鼓点敲下，Fast Attack 允许包络在 1~2 帧内瞬间爬升到顶点，弦上挺立出锐利清晰的尖峰波形，旋律起伏一目了然；
