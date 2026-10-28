@@ -55,11 +55,11 @@ legacySlug: "Notion-时间追踪系统构建日志-从纯文本文档到自动�
 
 #### 2.1 最终工作流
 
-1.  **柳比歇伏日志 (主数据库)**: 一个独立的数据库，作为所有时间记录的仓库![](https://helpfulcraft-blog.oss-cn-beijing.aliyuncs.com/20250827094719.png)
-2.  **我的日结本 (日志数据库)**: 一个独立的数据库，用于存放生成的日志![](https://helpfulcraft-blog.oss-cn-beijing.aliyuncs.com/20250827094954.png)
+1.  **柳比歇伏日志 (主数据库)**: 一个独立的数据库，作为所有时间记录的仓库![](/images/posts/legacy-oss/20250827094719.png)
+2.  **我的日结本 (日志数据库)**: 一个独立的数据库，用于存放生成的日志![](/images/posts/legacy-oss/20250827094954.png)
 3.  **日结模板 (Template)**: 在 `My Journals` 数据库**内部**创建一个模板，指向 `柳比歇伏日志` 的**关联数据库视图**，并预设过滤器，使其仅显示“创建日期为今天”的记录
 4.  **自动化按钮**: 在主页页面上创建一个按钮，配置以下动作：在 `我的日结本` 数据库中，使用上述模板创建一个新页面
-![](https://helpfulcraft-blog.oss-cn-beijing.aliyuncs.com/20250827094648.png)
+![](/images/posts/legacy-oss/20250827094648.png)
 
 ### 3. Notion 日期属性的分钟精度输入
 
@@ -77,7 +77,7 @@ legacySlug: "Notion-时间追踪系统构建日志-从纯文本文档到自动�
 
 ### 4. 统计页面截图
 
-![](https://helpfulcraft-blog.oss-cn-beijing.aliyuncs.com/20250827094525.png)
+![](/images/posts/legacy-oss/20250827094525.png)
 
 ### 总结
 
