@@ -3,7 +3,8 @@ title: "告别玄学抽卡：现代 AI 视觉生成工业架构与微创手术�
 description: "从 B站爆款 Anima 局部重绘、修手脚换装的底层机器视觉逆向出发，深度穿透 2024–2026 年 DiT 算子演进、ComfyUI DAG 编排、万字负面词退场、即时保脸与漫画连贯性悖论，直至 Wan 2.2 与 HunyuanVideo 的生视频接缝契约。"
 pubDate: "2026-10-28"
 pillar: ai_universe
-tags: ["AIGC", "ComfyUI", "FLUX", "Diffusion Transformer", "机器视觉", "架构设计", "Wan2.2", "HunyuanVideo"]
+entities: ["ComfyUI", "FLUX.1", "Wan 2.2", "HunyuanVideo", "YOLOv8", "SAM", "Diffusion Transformer"]
+tags: []
 author: "渥奇"
 aiCompanion: "Antigravity"
 comments: true

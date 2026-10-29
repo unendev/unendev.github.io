@@ -3,7 +3,8 @@ title: "Wallpaper Engine「深海流光」工程复盘：从 Boids 抱团坍缩�
 description: "深度拆解一款 4K 60FPS 极简音频律动壁纸的物理与算法演进：破解音频与仿生集群的“不可能三角”，引入哈密顿无散度流体场与 24 节点声学包络跟随器，实现极致轻量化的桌面生成艺术。"
 pubDate: 2026-10-28 08:00:00 +0800
 pillar: engineering
-tags: ["Wallpaper Engine", "生成艺术", "流体力学", "音频可视化", "前端性能优化"]
+entities: ["Wallpaper Engine", "Boids算法", "Canvas2D", "Web Audio API", "哈密顿流体"]
+tags: []
 author: 渥奇
 aiCompanion: Antigravity
 comments: true

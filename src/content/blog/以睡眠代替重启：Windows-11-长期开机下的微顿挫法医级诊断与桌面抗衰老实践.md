@@ -3,7 +3,8 @@ title: "以睡眠代替重启：Windows 11 长期开机下的微顿挫法医级�
 description: "作为一个重度开发工作流用户，“长期开机、以睡眠（Sleep）代替关机/重启”是保持上下文连续性的刚需。然而，在 Windows 11 连续运行 3 天以上并经历多次睡眠唤醒后，整机虽然整体可用，但却会出现一种令人抓狂的**“微顿挫（Micro-Stutter）”**：CPU 占用仅仅 4%~10%，没有任何死循环进程，但只要用鼠标拖拽一个窗口，画面就会出现断崖式掉帧（宛如从 144Hz 骤降至 30 帧幻灯片）。 本文记录了一次完整的法"
 pubDate: "2026-10-24"
 pillar: engineering
-tags: ["Windows","性能优化","踩坑记录","架构设计","调试"]
+entities: ["Windows 11", "DWM", "WPA", "ETW", "Commit Charge", "dwm.exe"]
+tags: []
 author: "渥奇"
 aiCompanion: "Antigravity"
 comments: true

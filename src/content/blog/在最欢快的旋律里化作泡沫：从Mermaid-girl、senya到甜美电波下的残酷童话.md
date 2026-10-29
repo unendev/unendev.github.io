@@ -3,7 +3,8 @@ title: "在最欢快的旋律里化作泡沫：从《Mermaid girl》、senya 到
 description: "下午在网易云音乐挂着“心动模式”，算法在连绵的歌单里忽然切出了一首节奏极快、甜得发齁、甚至带着几分“早年抖音热歌”气质的欧陆电波舞曲——《Mermaid girl (Extended RRver.)》。 屏幕上的歌手名字赫然写着：**Senya**。 熟悉东方同人音乐的人对这个名字绝不陌生——那是幽闭星光（幽閉サテライト）的灵魂主唱，曾在《色は匂へど散りぬるを》和《月に叢雲華に風》里用清冽、哀婉的和风声线唱尽幻想乡的盛衰。然而耳机里的这"
 pubDate: "2026-10-25 13:10:00 +0800"
 pillar: ai_universe
-tags: ["音乐","思考","二次元","文化"]
+entities: ["Mermaid girl", "senya", "Ryu☆", "Cream puff", "beatmania IIDX"]
+tags: []
 author: "渥奇"
 aiCompanion: "Antigravity"
 comments: true

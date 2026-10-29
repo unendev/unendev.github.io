@@ -3,7 +3,8 @@ title: "当工科游戏本遇上Power BI：Win11深层环境冲突、WebView2沙
 description: "在跨越数千公里的远程运维现场，往往隐藏着最极端、最反直觉的软件工程真实切片。一次面向新西兰 NZQA Level 7 数据分析课程（ITDA7.240 Lab 5）的交付任务，本该以双页商业大屏与严苛学术论证 PDF 的完工而告终。然而，当交付物落入一台被 Docker、VMware、Anaconda、火绒安全软件、多重网络代理以及联想拯救者硬件管理深度“混战”过的 Windows 11 笔记本时，一场连续触发 0xc0000142 崩"
 pubDate: "2026-10-26 23:10:00 +0800"
 pillar: engineering
-tags: ["Power BI","Windows 11","排坑记录","系统架构","WebView2"]
+entities: ["Power BI", "Windows 11", "WebView2", "Edge WebView2 Runtime", "PBIR"]
+tags: []
 author: "渥奇"
 aiCompanion: "Antigravity"
 comments: true
