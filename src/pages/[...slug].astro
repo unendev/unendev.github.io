@@ -37,7 +37,9 @@ export interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, pillar, tags, author = '渥奇', aiCompanion = 'Antigravity' } = post.data;
+const { title, description, pubDate, pillar, tags = [], entities = [], author = '渥奇', aiCompanion = 'Antigravity' } = post.data;
+const displayItems = entities && entities.length > 0 ? entities : tags;
+const isEntity = entities && entities.length > 0;
 
 const { Content, headings } = await post.render();
 
@@ -138,15 +140,23 @@ const jsonLd = {
         </p>
       )}
 
-      <!-- Tags list -->
+      <!-- Entities or Legacy Tags list -->
       <div class="flex flex-wrap items-center justify-center gap-2">
-        {tags.map((tag) => (
-          <a
-            href={`/tags#${encodeURIComponent(tag)}`}
-            class="text-xs font-mono text-slate-400 bg-slate-800/80 hover:bg-slate-700/80 hover:text-sky-300 px-2.5 py-1 rounded-md border border-slate-700/60 transition-colors"
-          >
-            #{tag}
-          </a>
+        {displayItems.map((item) => (
+          isEntity ? (
+            <span
+              class="text-xs font-mono text-slate-300 bg-slate-800/80 px-2.5 py-1 rounded-md border border-slate-700/60"
+            >
+              ※ {item}
+            </span>
+          ) : (
+            <a
+              href={`/tags#${encodeURIComponent(item)}`}
+              class="text-xs font-mono text-slate-400 bg-slate-800/80 hover:bg-slate-700/80 hover:text-sky-300 px-2.5 py-1 rounded-md border border-slate-700/60 transition-colors"
+            >
+              #{item}
+            </a>
+          )
         ))}
       </div>
     </header>

@@ -7,7 +7,9 @@ export interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, pillar, tags } = post.data;
+const { title, description, pubDate, pillar, tags = [], entities = [] } = post.data;
+const displayItems = entities && entities.length > 0 ? entities : tags;
+const isEntity = entities && entities.length > 0;
 
 const dateStr = pubDate instanceof Date
   ? pubDate.toISOString().slice(0, 10)
@@ -37,14 +39,14 @@ const dateStr = pubDate instanceof Date
 
   <div class="mt-auto pt-3 border-t border-[#23304a]/60 flex items-center justify-between relative z-10">
     <div class="flex flex-wrap gap-1.5">
-      {tags.slice(0, 3).map((tag) => (
+      {displayItems.slice(0, 3).map((item) => (
         <span class="text-[11px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60">
-          #{tag}
+          {isEntity ? `※ ${item}` : `#${item}`}
         </span>
       ))}
-      {tags.length > 3 && (
+      {displayItems.length > 3 && (
         <span class="text-[11px] font-mono text-slate-500 px-1 py-0.5">
-          +{tags.length - 3}
+          +{displayItems.length - 3}
         </span>
       )}
     </div>

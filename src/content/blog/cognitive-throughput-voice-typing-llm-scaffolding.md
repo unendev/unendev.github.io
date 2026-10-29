@@ -3,7 +3,8 @@ title: "【提问的复利】从媒介停止机制、产业经验迁移到思维
 description: "从短视频无界信息流与游戏的停止机制对比切入，剖析为什么我们要去理解暂时用不到的产业结构，并通过真实人机对话解构语音展开与键盘收敛的有效分工。"
 pubDate: 2026-10-29 00:00:00 +0800
 pillar: ai_universe
-tags: ["问题意识", "经验迁移", "认知复利", "媒介观察", "思维工具"]
+entities: ["Baddeley工作记忆", "ChatGPT", "Claude", "Gemini", "语音输入法", "停止机制"]
+tags: []
 author: 渥奇
 aiCompanion: Antigravity
 comments: true

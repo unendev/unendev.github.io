@@ -8,6 +8,7 @@ const blogCollection = defineCollection({
     pubDate: z.coerce.date(),
     pillar: z.enum(['engineering', 'ai_universe', 'narrative', 'tools']).default('engineering'),
     tags: z.array(z.string()).default([]),
+    entities: z.array(z.string()).default([]),
     author: z.string().default('渥奇'),
     aiCompanion: z.string().default('Antigravity'),
     comments: z.boolean().default(true),
