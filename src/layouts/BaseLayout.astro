@@ -91,8 +91,174 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://unendev.
       </div>
     </div>
 
+    <!-- Global Mermaid Interactive Lightbox (Pan & Zoom Modal) -->
+    <div id="mermaid-lightbox" aria-hidden="true">
+      <div class="lightbox-header">
+        <div class="lightbox-title">
+          <span class="inline-flex items-center justify-center w-6 h-6 rounded bg-sky-500/10 text-sky-400 font-mono text-xs">M</span>
+          <span>图表交互查看器</span>
+          <span class="lightbox-hints hidden sm:inline">· 滚轮无级缩放 · 拖拽平移 · 双击居中 · Esc 关闭</span>
+        </div>
+        <div class="lightbox-controls">
+          <span id="lightbox-zoom-label" class="font-mono text-xs text-slate-400 mr-2 select-none">100%</span>
+          <button id="lightbox-zoom-in" type="button" class="lightbox-btn" title="放大 (＋)">＋</button>
+          <button id="lightbox-zoom-out" type="button" class="lightbox-btn" title="缩小 (－)">－</button>
+          <button id="lightbox-zoom-reset" type="button" class="lightbox-btn" title="重置视角 (100%)">重置</button>
+          <button id="lightbox-close" type="button" class="lightbox-btn lightbox-btn-close" title="关闭 (Esc)">✕</button>
+        </div>
+      </div>
+      <div id="lightbox-canvas-wrapper" class="lightbox-canvas-wrapper">
+        <div id="mermaid-lightbox-viewport"></div>
+      </div>
+    </div>
+
     <!-- Client-side Interactive Enhancements: Offline Mermaid, Code Copy, Mouse Drag Gestures -->
     <script>
+      // Mermaid Lightbox Pan & Zoom Controller
+      let openMermaidLightbox: ((svgHtml: string) => void) | null = null;
+
+      function initMermaidLightbox() {
+        const lightbox = document.getElementById('mermaid-lightbox');
+        const viewport = document.getElementById('mermaid-lightbox-viewport');
+        const wrapper = document.getElementById('lightbox-canvas-wrapper');
+        const zoomLabel = document.getElementById('lightbox-zoom-label');
+        const btnIn = document.getElementById('lightbox-zoom-in');
+        const btnOut = document.getElementById('lightbox-zoom-out');
+        const btnReset = document.getElementById('lightbox-zoom-reset');
+        const btnClose = document.getElementById('lightbox-close');
+
+        if (!lightbox || !viewport || !wrapper || !zoomLabel) return;
+
+        let scale = 1.0;
+        let panX = 0;
+        let panY = 0;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+
+        function updateTransform() {
+          viewport.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+          zoomLabel.textContent = `${Math.round(scale * 100)}%`;
+        }
+
+        function resetTransform() {
+          scale = 1.0;
+          panX = 0;
+          panY = 0;
+          updateTransform();
+        }
+
+        function setZoom(newScale: number) {
+          scale = Math.min(Math.max(newScale, 0.3), 5.0);
+          updateTransform();
+        }
+
+        function closeLightbox() {
+          lightbox.classList.remove('active');
+          lightbox.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+          setTimeout(() => {
+            if (!lightbox.classList.contains('active')) {
+              viewport.innerHTML = '';
+            }
+          }, 200);
+        }
+
+        openMermaidLightbox = (svgHtml: string) => {
+          viewport.innerHTML = svgHtml;
+          const svgEl = viewport.querySelector('svg');
+          if (svgEl) {
+            const viewBox = svgEl.getAttribute('viewBox');
+            if (viewBox) {
+              const parts = viewBox.trim().split(/[\s,]+/);
+              if (parts.length === 4) {
+                const vbWidth = parseFloat(parts[2]);
+                svgEl.style.width = '100%';
+                svgEl.style.maxWidth = `${Math.min(vbWidth, 1400)}px`;
+                svgEl.style.height = 'auto';
+              }
+            } else {
+              svgEl.style.width = '100%';
+              svgEl.style.height = 'auto';
+            }
+          }
+          resetTransform();
+          lightbox.classList.add('active');
+          lightbox.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        };
+
+        btnIn?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          setZoom(scale + 0.25);
+        });
+        btnOut?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          setZoom(scale - 0.25);
+        });
+        btnReset?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          resetTransform();
+        });
+        btnClose?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeLightbox();
+        });
+
+        // Wheel Zoom
+        wrapper.addEventListener('wheel', (e) => {
+          e.preventDefault();
+          const delta = e.deltaY < 0 ? 0.15 : -0.15;
+          setZoom(scale + delta);
+        }, { passive: false });
+
+        // Double Click Reset
+        wrapper.addEventListener('dblclick', (e) => {
+          if (e.target === wrapper || wrapper.contains(e.target as Node)) {
+            resetTransform();
+          }
+        });
+
+        // Mouse Drag Panning
+        wrapper.addEventListener('mousedown', (e) => {
+          if (e.button !== 0) return;
+          isDragging = true;
+          startX = e.clientX - panX;
+          startY = e.clientY - panY;
+          wrapper.classList.add('is-dragging');
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          panX = e.clientX - startX;
+          panY = e.clientY - startY;
+          updateTransform();
+        });
+
+        window.addEventListener('mouseup', () => {
+          if (isDragging) {
+            isDragging = false;
+            wrapper.classList.remove('is-dragging');
+          }
+        });
+
+        // Esc key closes lightbox
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            closeLightbox();
+          }
+        }, true);
+
+        // Click outside backdrop closes
+        wrapper.addEventListener('click', (e) => {
+          if (e.target === wrapper) {
+            closeLightbox();
+          }
+        });
+      }
+
       // 1. 100% Offline Mermaid Renderer via Local mermaid.min.js
       function initMermaid() {
         const mermaidCodeBlocks = document.querySelectorAll('pre.language-mermaid, pre code.language-mermaid, div.language-mermaid, pre[data-language="mermaid"]');
@@ -107,35 +273,132 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://unendev.
         try {
           mermaid.initialize({
             startOnLoad: false,
-            theme: 'dark',
+            theme: 'base',
             themeVariables: {
               darkMode: true,
-              background: '#0d131f',
+              background: 'transparent',
+              mainBkg: '#111827',
+              nodeBorder: '#38bdf8',
+              nodeTextColor: '#f8fafc',
+              clusterBkg: 'rgba(30, 41, 59, 0.45)',
+              clusterBorder: 'rgba(56, 189, 248, 0.35)',
+              titleColor: '#38bdf8',
+              lineColor: '#64748b',
+              defaultLinkColor: '#64748b',
+              edgeLabelBackground: '#0d131f',
               primaryColor: '#1e293b',
               primaryTextColor: '#f8fafc',
               primaryBorderColor: '#38bdf8',
-              lineColor: '#64748b',
-              secondaryColor: '#334155',
+              secondaryColor: '#1e293b',
+              secondaryTextColor: '#f8fafc',
+              secondaryBorderColor: '#818cf8',
               tertiaryColor: '#090d16',
+              tertiaryTextColor: '#94a3b8',
+              tertiaryBorderColor: '#334155',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif',
+              fontSize: '13.5px',
             },
-            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
           });
 
           mermaidCodeBlocks.forEach(async (el, idx) => {
-            const code = el.textContent || '';
-            const container = document.createElement('div');
-            container.className = 'mermaid-container my-6 p-4 rounded-xl border border-[#23304a] bg-[#0d131f] flex justify-center';
+            const code = (el.textContent || '').trim();
+            if (!code) return;
+
+            // Create Industry-Standard Mermaid Card
+            const card = document.createElement('div');
+            card.className = 'mermaid-card';
+
+            const toolbar = document.createElement('div');
+            toolbar.className = 'mermaid-toolbar';
+            toolbar.innerHTML = `
+              <div class="mermaid-tag">
+                <span class="mermaid-tag-badge">M</span>
+                <span>逻辑拓扑 / 架构图</span>
+              </div>
+              <div class="mermaid-actions">
+                <button type="button" class="mermaid-btn mermaid-zoom-btn" title="点击全屏放大查看">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+                  <span>全屏放大</span>
+                </button>
+                <button type="button" class="mermaid-btn mermaid-copy-btn" title="复制 Mermaid 源码">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                  <span>源码</span>
+                </button>
+              </div>
+            `;
+
+            const viewport = document.createElement('div');
+            viewport.className = 'mermaid-viewport';
+            viewport.title = '点击全屏无级缩放查看';
+
+            card.appendChild(toolbar);
+            card.appendChild(viewport);
+
+            const targetToReplace = el.tagName.toLowerCase() === 'code' ? el.parentElement : el;
+            if (targetToReplace && targetToReplace.parentElement) {
+              targetToReplace.parentElement.replaceChild(card, targetToReplace);
+            }
+
             const graphId = `mermaid-svg-${idx}-${Date.now()}`;
-            
+
             try {
-              const { svg } = await mermaid.render(graphId, code.trim());
-              container.innerHTML = svg;
-              const targetToReplace = el.tagName.toLowerCase() === 'code' ? el.parentElement : el;
-              if (targetToReplace && targetToReplace.parentElement) {
-                targetToReplace.parentElement.replaceChild(container, targetToReplace);
-              }
+              const { svg } = await mermaid.render(graphId, code);
+              viewport.innerHTML = svg;
+
+              // Bind Click to Lightbox
+              const openDiagram = () => {
+                if (openMermaidLightbox) {
+                  openMermaidLightbox(svg);
+                }
+              };
+              viewport.addEventListener('click', openDiagram);
+              toolbar.querySelector('.mermaid-zoom-btn')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openDiagram();
+              });
+
+              // Bind Copy Code
+              const copyBtn = toolbar.querySelector('.mermaid-copy-btn');
+              copyBtn?.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                try {
+                  await navigator.clipboard.writeText(code);
+                  copyBtn.innerHTML = '<span class="text-emerald-400">✓ 已复制</span>';
+                  setTimeout(() => {
+                    copyBtn.innerHTML = `
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                      <span>源码</span>
+                    `;
+                  }, 2000);
+                } catch {
+                  copyBtn.textContent = '失败';
+                }
+              });
+
             } catch (renderErr) {
               console.warn('[Mermaid Render Error]:', renderErr);
+
+              // 1. Instantly eradicate the pink bomb dumped by Mermaid into document.body!
+              document.querySelectorAll(`div[id^="d${graphId}"], div[id^="dmermaid"]`).forEach((el) => el.remove());
+
+              // 2. Fallback gracefully inside the card
+              viewport.style.cursor = 'default';
+              const zoomBtn = toolbar.querySelector('.mermaid-zoom-btn') as HTMLElement;
+              if (zoomBtn) zoomBtn.style.display = 'none';
+
+              const safeCode = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+              viewport.innerHTML = `
+                <div class="w-full p-4 rounded-lg border border-amber-500/30 bg-amber-950/20 text-amber-200 text-xs font-mono">
+                  <div class="flex items-center gap-2 mb-2 font-sans font-semibold text-amber-400">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                    <span>图表解析异常（正文已优雅隔离保护）</span>
+                  </div>
+                  <details>
+                    <summary class="cursor-pointer text-slate-400 hover:text-slate-200 select-none">展开查看 Mermaid 原始语法</summary>
+                    <pre class="mt-2 p-2.5 bg-[#090d16] rounded border border-slate-800 overflow-x-auto text-slate-300 select-all">${safeCode}</pre>
+                  </details>
+                </div>
+              `;
             }
           });
         } catch (loadErr) {
@@ -240,6 +503,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://unendev.
 
         // Global Esc Key Back Navigation
         window.addEventListener('keydown', (e) => {
+          const lightbox = document.getElementById('mermaid-lightbox');
+          if (lightbox && lightbox.classList.contains('active')) {
+            // Lightbox Esc handled by its own prioritized handler
+            return;
+          }
           if (e.key === 'Escape' && window.location.pathname !== '/') {
             navigateBack();
           }
@@ -257,11 +525,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://unendev.
       // Execute on DOM loaded
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
+          initMermaidLightbox();
           initMermaid();
           initCodeCopy();
           initGestureAndNavigation();
         });
       } else {
+        initMermaidLightbox();
         initMermaid();
         initCodeCopy();
         initGestureAndNavigation();
