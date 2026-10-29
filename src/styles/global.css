@@ -189,6 +189,20 @@ body {
   display: block;
 }
 
+/* Prevent Tailwind typography line-height inheritance (e.g. 28px) from clipping Mermaid foreignObject */
+.mermaid-viewport foreignObject div,
+#mermaid-lightbox foreignObject div,
+.mermaid-viewport foreignObject span,
+#mermaid-lightbox foreignObject span {
+  line-height: 1.35 !important;
+  font-size: 13.5px !important;
+}
+
+.mermaid-viewport foreignObject,
+#mermaid-lightbox foreignObject {
+  overflow: visible !important;
+}
+
 /* Subgraph (cluster) elegant dark styling - eradicate default beige! */
 .mermaid-viewport .cluster rect,
 #mermaid-lightbox .cluster rect {

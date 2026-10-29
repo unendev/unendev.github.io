@@ -259,20 +259,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://unendev.
         });
       }
 
-      // 1. 100% Offline Mermaid Renderer via Local mermaid.min.js
+      // 1. 100% Offline Mermaid Renderer via Local mermaid.min.js with Async Watchdog
       function initMermaid() {
-        const mermaidCodeBlocks = document.querySelectorAll('pre.language-mermaid, pre code.language-mermaid, div.language-mermaid, pre[data-language="mermaid"]');
-        if (mermaidCodeBlocks.length === 0) return;
+        const renderBlocks = () => {
+          const mermaid = (window as any).mermaid;
+          if (!mermaid) return false;
 
-        const mermaid = (window as any).mermaid;
-        if (!mermaid) {
-          console.warn('[Mermaid Warning]: Local window.mermaid not yet ready');
-          return;
-        }
+          const mermaidCodeBlocks = document.querySelectorAll('pre.language-mermaid, pre code.language-mermaid, div.language-mermaid, pre[data-language="mermaid"]');
+          if (mermaidCodeBlocks.length === 0) return true;
 
-        try {
-          mermaid.initialize({
-            startOnLoad: false,
+          try {
+            mermaid.initialize({
+              startOnLoad: false,
             theme: 'base',
             themeVariables: {
               darkMode: true,
@@ -401,14 +399,35 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://unendev.
               `;
             }
           });
+          return true;
         } catch (loadErr) {
           console.warn('[Mermaid Initialization Warning]:', loadErr);
+          return false;
         }
+      };
+
+      if ((window as any).mermaid) {
+        renderBlocks();
+      } else {
+        let attempts = 0;
+        const maxAttempts = 60; // 60 * 50ms = 3 seconds watchdog
+        const timer = setInterval(() => {
+          attempts++;
+          if ((window as any).mermaid) {
+            clearInterval(timer);
+            renderBlocks();
+          } else if (attempts >= maxAttempts) {
+            clearInterval(timer);
+            console.warn('[Mermaid Warning]: window.mermaid initialization timed out');
+          }
+        }, 50);
       }
+    }
 
       // 2. Code Block Copy Button
       function initCodeCopy() {
         document.querySelectorAll('pre.astro-code').forEach((pre) => {
+          if (pre.getAttribute('data-language') === 'mermaid') return;
           if (pre.querySelector('.copy-code-btn')) return;
 
           const btn = document.createElement('button');
