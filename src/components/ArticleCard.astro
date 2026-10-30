@@ -37,25 +37,18 @@ const dateStr = pubDate instanceof Date
     </p>
   )}
 
-  <div class="mt-auto pt-3 border-t border-[#23304a]/60 flex items-center justify-between relative z-10">
-    <div class="flex flex-wrap gap-1.5">
-      {displayItems.slice(0, 3).map((item) => (
+  <div class="mt-auto pt-3 border-t border-[#23304a]/60 relative z-10">
+    <div class="flex flex-wrap items-center gap-1.5">
+      {displayItems.slice(0, 5).map((item) => (
         <span class="text-[11px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60">
           {isEntity ? `※ ${item}` : `#${item}`}
         </span>
       ))}
-      {displayItems.length > 3 && (
+      {displayItems.length > 5 && (
         <span class="text-[11px] font-mono text-slate-500 px-1 py-0.5">
-          +{displayItems.length - 3}
+          +{displayItems.length - 5}
         </span>
       )}
     </div>
-
-    <span class="text-xs font-medium text-sky-400 group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
-      阅读全文
-      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-      </svg>
-    </span>
   </div>
 </article>
