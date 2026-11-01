@@ -193,27 +193,27 @@ GameForegroundDetector:EnsureUserWhitelist()
 
 ```mermaid
 flowchart TD
-    subgraph HostSystem [宿主机输入与拦截]
-        Input[玩家唤起 / 快捷键或麦克风输入] --> ModCore[BepInEx 6 IL2CPP 插件]
+    subgraph HostSystem ["宿主机输入与拦截"]
+        Input["玩家唤起 / 快捷键或麦克风输入"] --> ModCore["BepInEx 6 IL2CPP 插件"]
     end
 
-    subgraph LLM_Pipeline [认知中枢 (本地 / 云端)]
-        ModCore -->|异步 HTTP 请求| LLM[大语言模型 (Ollama / DeepSeek / GPT)]
-        LLM -->|结构化流式输出| Parser[语义解析器]
-        Parser -->|提取回答正文| CleanText[纯净文本]
-        Parser -->|提取情绪 Tag: [Action: Tsundere]| ActionTag[动作指令]
+    subgraph LLM_Pipeline ["认知中枢 (本地 / 云端)"]
+        ModCore -->|"异步 HTTP 请求"| LLM["大语言模型 (Ollama / DeepSeek / GPT)"]
+        LLM -->|"结构化流式输出"| Parser["语义解析器"]
+        Parser -->|"提取回答正文"| CleanText["纯净文本"]
+        Parser -->|"提取情绪指令 (Action: Tsundere)"| ActionTag["动作指令"]
     end
 
-    subgraph Audio_Pipeline [声线克隆引擎]
-        CleanText -->|文本送入| TTS[CosyVoice 3 / GPT-SoVITS]
-        TTSRef[官方 5-10s 中配干声样本] --> TTS
-        TTS -->|毫秒级推理合成| WavStream[WAV 音频流]
+    subgraph Audio_Pipeline ["声线克隆引擎"]
+        CleanText -->|"文本送入"| TTS["CosyVoice 3 / GPT-SoVITS"]
+        TTSRef["官方 5-10s 中配干声样本"] --> TTS
+        TTS -->|"毫秒级推理合成"| WavStream["WAV 音频流"]
     end
 
-    subgraph Game_Runtime [游戏原生渲染层]
-        CleanText -->|调用| SayMethod[DialogueManager.Say()]
-        WavStream -->|转 AudioClip| AudioMethod[AudioManager.Play()]
-        ActionTag -->|解析动作枚举| SpineAnim[Spine 骨骼状态机]
+    subgraph Game_Runtime ["游戏原生渲染层"]
+        CleanText -->|"调用"| SayMethod["DialogueManager.Say()"]
+        WavStream -->|"转 AudioClip"| AudioMethod["AudioManager.Play()"]
+        ActionTag -->|"解析动作枚举"| SpineAnim["Spine 骨骼状态机"]
     end
 ```
 
@@ -254,21 +254,21 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    VersionNode{项目所选 Unity 版本}
+    VersionNode{"项目所选 Unity 版本"}
     
-    VersionNode -->|Unity 2022 LTS 及更早<br>(如本作 2021.3.45 LTS)| SafeZone[绝对商业豁免区]
-    VersionNode -->|Unity 6 及后续未来主线| RiskZone[国内策略分化区]
+    VersionNode -->|"Unity 2022 LTS 及更早 (如本作 2021.3.45 LTS)"| SafeZone["绝对商业豁免区"]
+    VersionNode -->|"Unity 6 及后续未来主线"| RiskZone["国内策略分化区"]
 
-    subgraph SafeZoneDetail [历史 LTS 协议契约]
-        SafeZone --> Safe1[保留全球原版 EULA 授权]
-        SafeZone --> Safe2[年流水 10/20 万美元以下合法免版税商用]
-        SafeZone --> Safe3[无团结引擎 GUID 割裂与构建服务费]
+    subgraph SafeZoneDetail ["历史 LTS 协议契约"]
+        SafeZone --> Safe1["保留全球原版 EULA 授权"]
+        SafeZone --> Safe2["年流水 10/20 万美元以下合法免版税商用"]
+        SafeZone --> Safe3["无团结引擎 GUID 割裂与构建服务费"]
     end
 
-    subgraph RiskZoneDetail [未来版本分流策略]
-        RiskZone --> Path1[国内渠道: 强制转投团结引擎 (承担特化条款)]
-        RiskZone --> Path2[Steam出海: 走海外主体/国际账号直连 Unity 6]
-        RiskZone --> Path3[引擎替换: 转向 Godot / Unreal Engine 5]
+    subgraph RiskZoneDetail ["未来版本分流策略"]
+        RiskZone --> Path1["国内渠道: 强制转投团结引擎 (承担特化条款)"]
+        RiskZone --> Path2["Steam出海: 走海外主体/国际账号直连 Unity 6"]
+        RiskZone --> Path3["引擎替换: 转向 Godot / Unreal Engine 5"]
     end
 ```
 
