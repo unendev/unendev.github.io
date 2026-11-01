@@ -1,5 +1,5 @@
 ---
-title: "十元桌宠背后的商业与技术法医：Spine 逆向、Steam 挂机经济学与 Unity 团结引擎合规真相"
+title: "《不/存在的莉莉丝》：十元桌宠背后的商业与技术法医——Spine 逆向、Steam 挂机经济学与 Unity 团结引擎合规真相"
 description: "以国产独立桌宠《不/存在的莉莉丝》为解剖样本，深度穿透 Unity 2021 IL2CPP 底层、Spine 2D 骨骼状态机、Steam 社区饰品经济学与 Unity 6 团结引擎商用合规风波。"
 pubDate: 2026-11-01 20:25:00 +0800
 pillar: engineering
