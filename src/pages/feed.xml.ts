@@ -15,7 +15,7 @@ export async function GET(context: APIContext) {
       title: post.data.title,
       pubDate: new Date(post.data.pubDate),
       description: post.data.description,
-      categories: [post.data.pillar, ...(post.data.tags || [])],
+      categories: [post.data.pillar, post.data.format === 'note' ? '短札' : '长文', ...post.data.topics, ...(post.data.tags || [])],
       author: post.data.author || '渥奇',
       link: `/${post.data.legacySlug || post.slug}/`,
     })),

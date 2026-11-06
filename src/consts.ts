@@ -48,6 +48,6 @@ export const PILLARS: Record<string, PillarInfo> = {
 };
 
 export const SITE_TITLE = "渥奇的思考卷轴";
-export const SITE_DESCRIPTION = "关于硬核工程、AI思辨、游戏文学与数字主权的深度思考与长篇技术复盘。";
+export const SITE_DESCRIPTION = "关于工程、AI、叙事与数字生活的长文与短札，记录值得继续追问的问题。";
 export const SITE_AUTHOR = "渥奇";
 export const SITE_AI_COMPANION = "Antigravity";

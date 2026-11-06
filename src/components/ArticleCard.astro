@@ -18,7 +18,7 @@ const dateStr = pubDate instanceof Date
 
 <article class="group relative flex flex-col p-6 rounded-2xl bg-[#111827]/70 border border-[#23304a]/80 hover:border-sky-500/50 hover:bg-[#162035]/80 transition-all duration-300 shadow-lg shadow-black/20 hover:shadow-sky-500/5">
   <div class="flex items-center justify-between gap-3 mb-3">
-    <PillarBadge pillar={pillar} size="sm" />
+    <div class="flex flex-wrap items-center gap-2"><PillarBadge pillar={pillar} size="sm" />{post.data.format === 'note' && <span class="text-xs text-slate-400">短札</span>}</div>
     <time datetime={dateStr} class="text-xs font-mono text-slate-400">
       {dateStr}
     </time>

@@ -1,0 +1,15 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { post: CollectionEntry<'blog'>; compact?: boolean }
+const { post, compact = false } = Astro.props;
+const { Content } = await post.render();
+const date = post.data.pubDate.toLocaleDateString('sv-SE', { timeZone: 'Asia/Shanghai' });
+---
+<article class="min-w-0 border-t border-[#23304a] py-6">
+  <div class="flex items-center gap-3 text-xs text-slate-400 mb-3"><span>短札</span><time datetime={post.data.pubDate.toISOString()}>{date}</time></div>
+  <h3 class="font-serif text-lg font-semibold leading-relaxed mb-4"><a class="text-slate-100 hover:text-sky-300" href={`/${post.data.legacySlug || post.slug}/`}>{post.data.title}</a></h3>
+  <div class:list={['prose prose-invert prose-slate max-w-prose font-serif text-slate-300 leading-loose prose-p:my-3 prose-blockquote:text-slate-300 prose-a:text-sky-300 break-words', { 'note-preview': compact }]}><Content /></div>
+  {compact && <a href={`/${post.data.legacySlug || post.slug}/`} class="mt-4 inline-block text-sm text-sky-300 hover:underline">阅读全文 →</a>}
+  {post.data.topics.length > 0 && <div class="mt-4 flex flex-wrap gap-3 text-xs">{post.data.topics.map(topic => <a class="text-sky-300 hover:underline" href={`/topics/${encodeURIComponent(topic)}/`}>议题 · {topic}</a>)}</div>}
+</article>
+<style>.note-preview { display: -webkit-box; -webkit-line-clamp: 12; -webkit-box-orient: vertical; overflow: hidden; }</style>

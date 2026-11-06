@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NoteCard from '../../components/NoteCard.astro';
+import { getCollection } from 'astro:content';
+const notes = (await getCollection('blog')).filter(p => p.data.format === 'note').sort((a,b) => b.data.pubDate.getTime()-a.data.pubDate.getTime());
+---
+<BaseLayout title="短札" description="记录一瞬间的触动，留下还没有答案的问题。">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+    <p class="text-sm text-sky-300 mb-4">片刻与追问</p><h1 class="text-3xl font-serif font-semibold text-slate-100 mb-5">短札</h1>
+    <p class="text-slate-400 leading-loose mb-6">不必把每一次触动都写成论述。这里留下现场、感受，以及还想继续问的问题。</p>
+    <a href="/topics/" class="text-sm text-sky-300 hover:underline">按议题阅读 →</a>
+    <div class="mt-8">{notes.map(post => <NoteCard post={post} />)}{!notes.length && <p class="text-slate-400 py-8">尚无短札。</p>}</div>
+  </div>
+</BaseLayout>

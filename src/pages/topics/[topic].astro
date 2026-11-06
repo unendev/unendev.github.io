@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import NoteCard from '../../components/NoteCard.astro';
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return [...new Set(posts.flatMap(post => post.data.topics))].map(topic => ({params: {topic}, props: {topic}}));
+}
+const { topic } = Astro.props;
+const posts = (await getCollection('blog')).filter(post => post.data.topics.includes(topic)).sort((a,b) => b.data.pubDate.getTime()-a.data.pubDate.getTime());
+---
+<BaseLayout title={topic} description={`围绕“${topic}”的长文与短札。`}>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+    <a href="/topics/" class="text-sm text-sky-300 hover:underline">← 全部议题</a>
+    <p class="text-xs text-slate-400 mt-10 mb-4">持续中的问题 · {posts.length} 篇记录</p><h1 class="text-3xl font-serif font-semibold text-slate-100 leading-relaxed mb-5">{topic}</h1>
+    <p class="text-slate-400 leading-loose mb-10">把不同时间的观察放在一起。这里允许疑问保留，也允许理解改变。</p>
+    <div class="space-y-5">{posts.map(post => post.data.format === 'note' ? <NoteCard post={post} /> : <ArticleCard post={post} />)}</div>
+  </div>
+</BaseLayout>

@@ -38,6 +38,7 @@ export interface Props {
 
 const { post } = Astro.props;
 const { title, description, pubDate, pillar, tags = [], entities = [], author = '渥奇', aiCompanion = 'Antigravity' } = post.data;
+const isNote = post.data.format === 'note';
 const displayItems = entities && entities.length > 0 ? entities : tags;
 const isEntity = entities && entities.length > 0;
 
@@ -53,7 +54,7 @@ const dateStr = pubDate instanceof Date
   : String(pubDate).slice(0, 10);
 
 // Filter h2 and h3 for clean TOC
-const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const tocHeadings = (isNote ? [] : headings).filter((h) => h.depth === 2 || h.depth === 3);
 
 // Find adjacent posts for previous / next navigation
 const allPosts = await getCollection('blog');
@@ -96,6 +97,18 @@ const jsonLd = {
   <!-- Schema.org BlogPosting JSON-LD -->
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
+  {isNote ? (
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+      <a href="/notes/" class="text-sm text-sky-300 hover:underline">← 全部短札</a>
+      <header class="mt-10 mb-8">
+        <p class="text-sm text-slate-400 mb-4"><time datetime={pubDate.toISOString()}>{pubDate.toLocaleDateString('sv-SE', { timeZone: 'Asia/Shanghai' })}</time> · 短札 · {author}</p>
+        <h1 class="text-3xl sm:text-4xl font-serif font-semibold text-slate-100 leading-relaxed">{title}</h1>
+      </header>
+      <article class="prose prose-invert prose-slate max-w-none font-serif text-base sm:text-lg text-slate-200 leading-loose prose-blockquote:text-slate-300 prose-img:rounded-xl break-words"><Content /></article>
+      {post.data.topics.length > 0 && <footer class="mt-10 pt-6 border-t border-[#23304a] flex flex-wrap gap-4 text-sm">{post.data.topics.map(topic => <a class="text-sky-300 hover:underline" href={`/topics/${encodeURIComponent(topic)}/`}>继续议题 · {topic} →</a>)}</footer>}
+      <p class="mt-8 text-xs text-slate-400">协同整理：{aiCompanion}</p>
+    </div>
+  ) : (
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-14">
     <!-- Top Bar: Back link -->
     <div class="mb-8 flex items-center justify-between">
@@ -161,6 +174,7 @@ const jsonLd = {
       </div>
     </header>
 
+    {post.data.topics.length > 0 && <nav aria-label="相关议题" class="flex flex-wrap justify-center gap-4 mb-8 text-sm">{post.data.topics.map(topic => <a class="text-sky-300 hover:underline" href={`/topics/${encodeURIComponent(topic)}/`}>议题 · {topic}</a>)}</nav>}
     <!-- Main Content Layout (Grid with Sticky TOC on desktop: lg & xl) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
       <!-- Article Body (8 cols on lg, 9 cols on xl for optimal reading breadth) -->
@@ -299,6 +313,8 @@ const jsonLd = {
       </button>
     </div>
   </div>
+
+  )}
 
   <script>
     // 1. Back to top button visibility

@@ -7,6 +7,8 @@ const blogCollection = defineCollection({
     description: z.string().default(''),
     pubDate: z.coerce.date(),
     pillar: z.enum(['engineering', 'ai_universe', 'narrative', 'tools']).default('engineering'),
+    format: z.enum(['essay', 'note']).default('essay'),
+    topics: z.array(z.string().trim().min(1)).default([]),
     tags: z.array(z.string()).default([]),
     entities: z.array(z.string()).default([]),
     author: z.string().default('渥奇'),

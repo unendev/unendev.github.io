@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const posts = await getCollection('blog');
+const topics = [...new Set(posts.flatMap(post => post.data.topics))].sort((a,b) => a.localeCompare(b,'zh-CN'));
+---
+<BaseLayout title="议题" description="让不同时间的长文与短札，围绕同一个问题相遇。">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+    <p class="text-sm text-sky-300 mb-4">沿着问题继续读</p><h1 class="text-3xl font-serif font-semibold text-slate-100 mb-5">议题</h1>
+    <p class="text-slate-400 leading-loose mb-10">同一个问题，可以有不同时间的回应，也可以暂时没有答案。</p>
+    <div class="grid sm:grid-cols-2 gap-5">{topics.map(topic => <a class="rounded-xl border border-[#23304a] bg-[#111827]/60 p-6 hover:border-slate-500" href={`/topics/${encodeURIComponent(topic)}/`}><h2 class="text-lg font-serif font-semibold text-slate-100 mb-3">{topic}</h2><p class="text-sm text-slate-400">{posts.filter(post => post.data.topics.includes(topic)).length} 篇记录 · 继续阅读 →</p></a>)}</div>
+    {!topics.length && <p class="text-slate-400">议题将在记录中逐渐形成。</p>}
+  </div>
+</BaseLayout>
