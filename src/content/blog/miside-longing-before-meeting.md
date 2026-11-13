@@ -12,6 +12,10 @@ aiCompanion: "Codex"
 comments: true
 ---
 
+![《米塔》官方截图：米塔举起手机，与玩家在温暖的客厅里合影。](/images/posts/miside-longing-before-meeting/miside-warm-room.jpg)
+
+*《米塔》的日常相处画面。来源：[Steam 官方商店](https://store.steampowered.com/app/2527500/MiSide/)。*
+
 我是被《Sabado》的封面吸引进去的。
 
 那个女孩让我想到米塔。具体说不上来是什么，也许是形象，也许是气质：她有吸引力，又不像一个单纯阳光、毫无秘密的角色。我想知道她是谁，想走近一点。
@@ -50,6 +54,10 @@ comments: true
 
 最初，我隔着手机与米塔互动。我们已经说过话，一起做过一些事，却还没有真正站在同一个空间里。那种关系很奇特：有联系，有亲近，但又隔着一层。
 
+![《米塔》最初的手机游戏界面：俯视的房间里，米塔等待着玩家的互动。](/images/posts/miside-longing-before-meeting/miside-phone-world.jpg)
+
+*最初隔着屏幕照顾她，后来才进入她的空间。来源：[Steam 官方商店](https://store.steampowered.com/app/2527500/MiSide/)。*
+
 等到进入她的世界，我还是见不到她。
 
 房间在这里，她的东西也在这里。我需要寻找一些与她有关的私人物品，把它们放到机器上，再设法前往另一个版本。这个过程同样有系统引导，也同样要找东西，可我心里的问题变了：
@@ -81,6 +89,13 @@ comments: true
 我先被突然出现吓了一下，随即又感觉她也在期待这场见面。期待、惊吓和亲近，接在同一个动作里。回过头去看，前面那些等待因此有了回应。
 
 还有那些浮在空间里的字幕。字体、颜色和出现的方式都很活跃，台词像是和角色一起待在房间里。读她说的话，也参与了我对她的感受。
+
+<video controls autoplay muted loop playsinline preload="metadata" width="600" height="200" poster="/images/posts/miside-longing-before-meeting/miside-selfie-poster.jpg" aria-label="米塔官方合影片段，展示空间字幕、角色动作与第一人称视角的配合" style="display:block;width:100%;max-width:100%;height:auto;border-radius:12px;">
+  <source src="/images/posts/miside-longing-before-meeting/miside-selfie-subtitles.mp4" type="video/mp4" />
+  <a href="/images/posts/miside-longing-before-meeting/miside-selfie-subtitles.mp4">播放米塔官方合影片段</a>
+</video>
+
+*这段官方循环短片展示了空间字幕、角色动作与合影视角的配合，并非前文首次见面的实录。来源：[Steam 官方商店](https://store.steampowered.com/app/2527500/MiSide/)。*
 
 后来一起玩游戏，一起看电视，开始过一种温馨的生活。这种温馨里又不断透出异样。我记得她伸手进入电视，拿出饮料来招待我；画面里饮料的来历却带着怪诞甚至残酷的意味。她在做亲近的事，那件事的实现方式却让我不安。
 
