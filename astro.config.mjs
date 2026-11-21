@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import remarkCallouts from './src/plugins/remark-callouts.mjs';
+import rehypeOptimizeImages from './src/plugins/rehype-optimize-images.mjs';
 
 export default defineConfig({
   site: 'https://unendev.github.io',
@@ -18,7 +19,7 @@ export default defineConfig({
   ],
   markdown: {
     remarkPlugins: [remarkMath, remarkCallouts],
-    rehypePlugins: [rehypeKatex],
+    rehypePlugins: [rehypeKatex, rehypeOptimizeImages],
     shikiConfig: {
       theme: 'one-dark-pro',
       wrap: true,
