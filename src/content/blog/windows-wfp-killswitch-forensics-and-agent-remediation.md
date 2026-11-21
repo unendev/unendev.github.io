@@ -4,6 +4,7 @@ description: "从一次以太网显示连接但公网全报一般故障的真实
 pubDate: 2026-11-21 16:35:00 +0800
 pillar: engineering
 format: essay
+topics: ["系统法医", "系统工程", "网络排障"]
 entities: ["Windows Filtering Platform", "WFP", "Kill Switch", "cc-hahaeasy", "spacedesk", "PowerShell", "Netsh", "DNS Client"]
 tags: []
 author: 渥奇
