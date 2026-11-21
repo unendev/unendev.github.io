@@ -33,9 +33,9 @@ legacySlug: "当工科游戏本遇上Power-BI-Win11深层环境冲突-WebView2�
 
 工程流水线在极速响应下，分别完成了 Page 1 主大屏和 Page 2 学术论证大屏的原生 PBIR 编译，并导出了规范的学术交付公文：
 
-![Page 1 高管主大屏渲染验收](/images/posts/powerbi-win11-forensics/dashboard-page1-executive.png)
+![Page 1 高管主大屏渲染验收](/images/posts/powerbi-win11-forensics/dashboard-page1-executive.webp)
 
-![Page 2 视觉图表选型与学术论证大屏](/images/posts/powerbi-win11-forensics/dashboard-page2-justification.png)
+![Page 2 视觉图表选型与学术论证大屏](/images/posts/powerbi-win11-forensics/dashboard-page2-justification.webp)
 
 当一切看似大功告成、准备交差验收时，真正的深水区挑战，才在客户端的屏幕上悄然拉开帷幕。
 
@@ -51,7 +51,7 @@ legacySlug: "当工科游戏本遇上Power-BI-Win11深层环境冲突-WebView2�
 
 然而，当对方电脑尝试打开该项目时，屏幕上并未出现数据大屏，而是直接弹出了 Windows 的应用程序初始化失败警告：
 
-![SqlDumper 异常闪退崩溃弹窗](/images/posts/powerbi-win11-forensics/sqldumper-0xc0000142.png)
+![SqlDumper 异常闪退崩溃弹窗](/images/posts/powerbi-win11-forensics/sqldumper-0xc0000142.webp)
 
 ```text
 SqlDumper.exe - 应用程序错误
@@ -71,7 +71,7 @@ SqlDumper.exe - 应用程序错误
 本以为单文件双击即开，但诡异的一幕再次发生：  
 软件窗口刚刚绘制出一个白色矩形框，界面中央就赫然出现了一张令人心惊肉跳的崩溃卡片：
 
-![Power BI 启动开屏 WebView2 崩溃](/images/posts/powerbi-win11-forensics/pbi-webview2-out-of-memory.png)
+![Power BI 启动开屏 WebView2 崩溃](/images/posts/powerbi-win11-forensics/pbi-webview2-out-of-memory.webp)
 
 ```text
 此页存在问题
@@ -88,7 +88,7 @@ SqlDumper.exe - 应用程序错误
 
 然而，当普通双击运行该安装程序时，安装器画出了带有 Microsoft 标志的白色外框，随后正中央弹出了最令人匪夷所思的 Windows 系统级拦截警告：
 
-![安装包外壳弹出的系统配置错误](/images/posts/powerbi-win11-forensics/wix-burn-os-config-error.png)
+![安装包外壳弹出的系统配置错误](/images/posts/powerbi-win11-forensics/wix-burn-os-config-error.webp)
 
 ```text
 错误

@@ -10,7 +10,7 @@ aiCompanion: Antigravity
 comments: true
 ---
 
-![深海流光 4K 桌面渲染全景](/images/posts/wallpaper-engine-deepsea/preview_poster.jpg)
+![深海流光 4K 桌面渲染全景](/images/posts/wallpaper-engine-deepsea/preview_poster.webp)
 
 ## 序言：桌面生成艺术的“不可能三角”
 
@@ -60,7 +60,7 @@ flowchart LR
 
 在早期迭代中，一旦重低音节奏连续轰击，动态膨胀的向心引力迅速在几帧内彻底压垮了局域排斥距离（Separation Radius）。88 只自由滑行的发光粒子瞬间被强行扯向同一个质心，形成了一个紧密挤压、互相剧烈穿透的**“死肉丸”（Bait Ball 坍缩陷阱）**。
 
-![鱼群在屏幕中央坍缩为拥挤团块的失控状态](/images/posts/wallpaper-engine-deepsea/steam_workshop_page.png)
+![鱼群在屏幕中央坍缩为拥挤团块的失控状态](/images/posts/wallpaper-engine-deepsea/steam_workshop_page.webp)
 
 更致命的是：
 1. **拓扑自由度归零**：一旦进入致密拥挤状态，粒子的速度向量被强行对齐锁定，原本如花样滑冰般的微观 S 弯与对流完全消失，只剩下一个不断原地抽搐的粒子球；
@@ -122,7 +122,7 @@ $$\vec{v}_{\text{advect}}(x, y) = \sum_{k=1}^{3} \Gamma_k \cdot \frac{\left( -(y
 - **弦 3（High-Mid）**：女声高音、吉他主旋律，负责精细起伏与锐利尖角；
 - **弦 4（Air/Treble）**：镲片、钹与高频空气感，以细密高频涟漪划过夜空。
 
-![四轴声学光弦与粒子集群滑行实机渲染图](/images/posts/wallpaper-engine-deepsea/screenshot_strings.jpg)
+![四轴声学光弦与粒子集群滑行实机渲染图](/images/posts/wallpaper-engine-deepsea/screenshot_strings.webp)
 
 ### 诡异的“闪烁”与相变抽搐（Geometric Strobing）
 

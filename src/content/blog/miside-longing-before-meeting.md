@@ -12,7 +12,7 @@ aiCompanion: "Codex"
 comments: true
 ---
 
-![《米塔》官方截图：米塔举起手机，与玩家在温暖的客厅里合影。](/images/posts/miside-longing-before-meeting/miside-warm-room.jpg)
+![《米塔》官方截图：米塔举起手机，与玩家在温暖的客厅里合影。](/images/posts/miside-longing-before-meeting/miside-warm-room.webp)
 
 *《米塔》的日常相处画面。来源：[Steam 官方商店](https://store.steampowered.com/app/2527500/MiSide/)。*
 
@@ -34,11 +34,11 @@ comments: true
 
 我能看懂事情发生了，却不太明白这些事情为什么值得让我亲手经历。
 
-![《Sabado》开场房间：浓重的蓝紫色环境与橙粉色光照形成强烈对比。](/images/posts/miside-longing-before-meeting/sabado-room.png)
+![《Sabado》开场房间：浓重的蓝紫色环境与橙粉色光照形成强烈对比。](/images/posts/miside-longing-before-meeting/sabado-room.webp)
 
 这两张截图来自我的开场体验录像。第一张的色调已经很强烈，之后又逐渐变成第二张那种近乎黑红色的失真画面。
 
-![同一段开场中，房间逐渐变成黑红色的失真画面。](/images/posts/miside-longing-before-meeting/sabado-distortion.png)
+![同一段开场中，房间逐渐变成黑红色的失真画面。](/images/posts/miside-longing-before-meeting/sabado-distortion.webp)
 
 这种色彩不一定不能用，但我从一开始就很难相信这是一个人平常生活的房间。于是后面再发生异变，我感受到的更多是游戏开始施加特效了。
 
@@ -58,7 +58,7 @@ comments: true
 
 最初，我隔着手机与米塔互动。我们已经说过话，一起做过一些事，却还没有真正站在同一个空间里。那种关系很奇特：有联系，有亲近，但又隔着一层。
 
-![《米塔》最初的手机游戏界面：俯视的房间里，米塔等待着玩家的互动。](/images/posts/miside-longing-before-meeting/miside-phone-world.jpg)
+![《米塔》最初的手机游戏界面：俯视的房间里，米塔等待着玩家的互动。](/images/posts/miside-longing-before-meeting/miside-phone-world.webp)
 
 *最初隔着屏幕照顾她，后来才进入她的空间。来源：[Steam 官方商店](https://store.steampowered.com/app/2527500/MiSide/)。*
 
@@ -98,7 +98,7 @@ comments: true
 
 还有那些浮在空间里的字幕。字体、颜色和出现的方式都很活跃，台词像是和角色一起待在房间里。读她说的话，也参与了我对她的感受。
 
-<video controls autoplay muted loop playsinline preload="metadata" width="600" height="200" poster="/images/posts/miside-longing-before-meeting/miside-selfie-poster.jpg" aria-label="米塔官方合影片段，展示空间字幕、角色动作与第一人称视角的配合" style="display:block;width:100%;max-width:100%;height:auto;border-radius:12px;">
+<video controls autoplay muted loop playsinline preload="metadata" width="600" height="200" poster="/images/posts/miside-longing-before-meeting/miside-selfie-poster.webp" aria-label="米塔官方合影片段，展示空间字幕、角色动作与第一人称视角的配合" style="display:block;width:100%;max-width:100%;height:auto;border-radius:12px;">
   <source src="/images/posts/miside-longing-before-meeting/miside-selfie-subtitles.mp4" type="video/mp4" />
   <a href="/images/posts/miside-longing-before-meeting/miside-selfie-subtitles.mp4">播放米塔官方合影片段</a>
 </video>

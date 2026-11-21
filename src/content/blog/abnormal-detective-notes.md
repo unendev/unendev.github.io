@@ -18,7 +18,7 @@ aiCompanion: Antigravity
 
 ## 一、搜查现场：衣物与气味
 
-![搜查现场：衣物与气味](/images/posts/abnormal-detective-notes/scene-01-odor.jpg)
+![搜查现场：衣物与气味](/images/posts/abnormal-detective-notes/scene-01-odor.webp)
 
 > **莱尔**：“我对妹妹衣服上的味道很熟悉，可以肯定她根本没穿过这件衣服。”  
 > **爱丽丝**：“救命啊！这里居然有两个变态！”  
@@ -27,18 +27,18 @@ aiCompanion: Antigravity
 
 ## 二、一句吐槽：病能本来就是无咏唱的
 
-![莱尔谈到病能无咏唱](/images/posts/abnormal-detective-notes/scene-02-ability.jpg)
+![莱尔谈到病能无咏唱](/images/posts/abnormal-detective-notes/scene-02-ability.webp)
 
 > **莱尔**：“大家的病能本来就是无咏唱的吧！”
 
 ## 三、在场人物互动：亥珀与灰妲
 
-![在场人物互动：亥珀与灰妲](/images/posts/abnormal-detective-notes/scene-03-haipo-and-huidan.jpg)
+![在场人物互动：亥珀与灰妲](/images/posts/abnormal-detective-notes/scene-03-haipo-and-huidan.webp)
 
 > **亥珀**：“……灰妲，你真的要丢下我一个人，自己变聪明吗？”
 
 ## 四、菲丝的评价
 
-![菲丝评价试探莱尔的方法](/images/posts/abnormal-detective-notes/scene-04-feisi.jpg)
+![菲丝评价试探莱尔的方法](/images/posts/abnormal-detective-notes/scene-04-feisi.webp)
 
 > **菲丝**：“居然用这么笨的方法来试探莱尔哥哥。”

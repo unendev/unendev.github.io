@@ -34,7 +34,7 @@ legacySlug: "在最欢快的旋律里化作泡沫-从Mermaid-girl-senya到甜美
 4. **失落的歌喉**：“那天我将我清澈的声音交给了她，唱着无言的歌，你能听到我的呼唤吗？”
 5. **最终的宿命**：“水泡迸发而消散，在那蓝色深海中……我知道我的命运是一个悲伤的童话，所以你能擦干我的眼泪吗？”
 
-![《Mermaid girl (Extended RRver.)》播放界面与歌词](/images/posts/mermaid-girl/mermaid_girl_player_lyrics.png)
+![《Mermaid girl (Extended RRver.)》播放界面与歌词](/images/posts/mermaid-girl/mermaid_girl_player_lyrics.webp)
 
 这首歌最震撼、甚至让人感到战栗的艺术设计，在于它的**副歌（Chorus）从头到尾没有做任何调性或编曲上的变奏**。
 
@@ -91,7 +91,7 @@ AI 认真地给我拆解了词源演变，才让我意识到这背后跨越数�
 - **最初出处**：2010 年街机音游《beatmania IIDX 18 Resort Anthem》
 - **演唱者**：**moimoi**
 
-![网易云音乐评论区的集体记忆与热评](/images/posts/mermaid-girl/mermaid_girl_comments.png)
+![网易云音乐评论区的集体记忆与热评](/images/posts/mermaid-girl/mermaid_girl_comments.webp)
 
 那么，moimoi 和 senya 到底是什么关系？
 

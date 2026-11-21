@@ -3,9 +3,11 @@ import path from 'node:path';
 import sharp from 'sharp';
 
 const IMAGES_DIR = path.resolve('public/images/posts');
+const BLOG_DIR = path.resolve('src/content/blog');
 const SUPPORTED_EXTS = new Set(['.png', '.jpg', '.jpeg']);
 const MAX_WIDTH = 2560; // 4K 级别上限，防巨图爆内存并保持高精物证级画质
 const WEBP_QUALITY = 82;
+const KEEP_SOURCE = process.argv.includes('--keep-source');
 
 function formatBytes(bytes) {
   if (bytes === 0) return '0 B';
@@ -29,6 +31,20 @@ function getAllFiles(dir, fileList = []) {
   return fileList;
 }
 
+function updateMarkdownReferences(oldRelPath, newRelPath) {
+  if (!fs.existsSync(BLOG_DIR)) return;
+  const mdFiles = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith('.md') || f.endsWith('.mdx'));
+  for (const f of mdFiles) {
+    const p = path.join(BLOG_DIR, f);
+    const content = fs.readFileSync(p, 'utf8');
+    if (content.includes(oldRelPath)) {
+      const updated = content.replaceAll(oldRelPath, newRelPath);
+      fs.writeFileSync(p, updated, 'utf8');
+      console.log(`[img-opt] Updated reference in ${f}: ${oldRelPath} -> ${newRelPath}`);
+    }
+  }
+}
+
 export async function optimizeImages() {
   const startTime = Date.now();
   console.log('[img-opt] Scanning public/images/posts for unoptimized images...');
@@ -46,8 +62,8 @@ export async function optimizeImages() {
   for (const sourcePath of targetFiles) {
     const parsed = path.parse(sourcePath);
     const webpPath = path.join(parsed.dir, `${parsed.name}.webp`);
-
     const sourceStat = fs.statSync(sourcePath);
+    const relSource = path.relative(IMAGES_DIR, sourcePath).replace(/\\/g, '/');
 
     // 增量检查：如果对应 webp 已存在且修改时间晚于源文件，则跳过
     if (fs.existsSync(webpPath)) {
@@ -70,7 +86,6 @@ export async function optimizeImages() {
 
       const webpStat = fs.statSync(webpPath);
       const diff = sourceStat.size - webpStat.size;
-      const relSource = path.relative(IMAGES_DIR, sourcePath).replace(/\\/g, '/');
 
       // 如果 WebP 体积反而更大（偶见于本来就已被极度压缩的小 JPG），则删除 WebP，保留原图
       if (diff <= 0) {
@@ -81,10 +96,18 @@ export async function optimizeImages() {
       }
 
       const ratio = ((diff / sourceStat.size) * 100).toFixed(1);
-
       console.log(
         `[img-opt] ${relSource}: ${formatBytes(sourceStat.size)} -> ${formatBytes(webpStat.size)} (-${ratio}%)`
       );
+
+      // 同步更新 Markdown 引用并彻底清理未压缩的大源图（防止 Git 膨胀）
+      const oldWebPath = `/images/posts/${relSource}`;
+      const newWebPath = `/images/posts/${relSource.replace(/\.(png|jpe?g)$/i, '.webp')}`;
+      updateMarkdownReferences(oldWebPath, newWebPath);
+
+      if (!KEEP_SOURCE) {
+        fs.unlinkSync(sourcePath);
+      }
 
       savedBytes += diff;
       convertedCount++;

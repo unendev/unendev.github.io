@@ -49,7 +49,7 @@ WebUI 只要遇到多模型串联，显存（VRAM）就会瞬间被打爆（OOM�
 
 为了建立清晰的工程坐标系，我们将当前现代 AI 生图全域技术按照数据流向与功能边界，解构为自顶向下的 **6 大一等公民技术层级**：
 
-![架构图 A：生图全域工业级 6 层全景架构图](/images/posts/ai-visual-sota/architecture_landscape.png)
+![架构图 A：生图全域工业级 6 层全景架构图](/images/posts/ai-visual-sota/architecture_landscape.webp)
 
 ```mermaid
 flowchart TD
@@ -79,7 +79,7 @@ flowchart TD
 
 回到引言中提及的 `BV1yDE96kEQX` 视频，我们在 ComfyUI 中将其背后的数据流完整逆向提炼，其底层遵循的是标准的 **4 阶段微观手术拓扑**：
 
-![微观手术执行流：YOLOv8 + SAM + Anima Inpaint 局部解剖与重绘拓扑](/images/posts/ai-visual-sota/micro_surgery_flow.png)
+![微观手术执行流：YOLOv8 + SAM + Anima Inpaint 局部解剖与重绘拓扑](/images/posts/ai-visual-sota/micro_surgery_flow.webp)
 
 #### 1. 阶段一：自动开刀选区（选区定位）
 传统重绘最大的痛点在于用鼠标画笔去涂抹掩码（Mask），涂多了会破坏人体边缘，涂少了会留下原服饰的残渣。现代工作流全面接入机器视觉目标检测：

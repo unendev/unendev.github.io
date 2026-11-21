@@ -113,7 +113,7 @@ Status: 效率模式 (Windows 11 EcoQoS)
 **原因**：Windows 11 的能效调度机制（EcoQoS）或某些后台规则误将 IDE 的活动渲染器进程打入了“效率模式 + 空闲优先级”。Chromium 渲染器的光栅化线程被强制降频限流，导致页面滑动帧率不足，产生严重拖影。
 **修复**：将其优先级恢复为 `Normal`，界面滑动即刻重回满帧丝滑。
 
-![Process Lasso 调度界面](/images/posts/windows-sleep-stutter/process_lasso_probalance.png)
+![Process Lasso 调度界面](/images/posts/windows-sleep-stutter/process_lasso_probalance.webp)
 *图 1：多进程共存下的动态调度状态（可见前台与后台进程不同的优先级流转）*
 
 ### 2. 闭源商业软件的“30 秒倒数”困局
@@ -122,7 +122,7 @@ Status: 效率模式 (Windows 11 EcoQoS)
 但在实际体验其图形界面时，免费版的商业机制暴露出巨大体验断层：
 每次呼出主界面，都会弹出一个长达 **30 秒且不可跳过的强制倒数弹窗**：
 
-![Process Lasso 30秒倒数弹窗](/images/posts/windows-sleep-stutter/process_lasso_nag.png)
+![Process Lasso 30秒倒数弹窗](/images/posts/windows-sleep-stutter/process_lasso_nag.webp)
 *图 2：Process Lasso 免费版的 30 秒强制倒数弹窗*
 
 这一机制彻底否定了将其作为日常“应急任务管理器”的可能性——当系统某个软件卡死急需杀进程时，等待 30 秒倒数无疑是反人类的。
